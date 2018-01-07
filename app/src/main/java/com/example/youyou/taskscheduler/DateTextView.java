@@ -13,7 +13,7 @@ import android.view.Gravity;
 
 public class DateTextView extends android.support.v7.widget.AppCompatTextView{
 
-    public DateTextView(Activity activity){//
+    public DateTextView(Activity activity){
         super(activity);
 
         int nWeekDays = getResources().getInteger(R.integer.weekdays);
