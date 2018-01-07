@@ -3,4 +3,11 @@
     <integer name="defaultYear">1900</integer>
     <integer name="defaultMonth">1</integer>
     <integer name="weekdays">7</integer>
+    <integer name="sunday">0</integer>
+    <integer name="monday">1</integer>
+    <integer name="tuesday">2</integer>
+    <integer name="wednesday">3</integer>
+    <integer name="thursday">4</integer>
+    <integer name="friday">5</integer>
+    <integer name="saturday">6</integer>
 </resources>

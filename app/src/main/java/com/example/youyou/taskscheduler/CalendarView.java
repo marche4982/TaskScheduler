@@ -99,17 +99,17 @@ public class CalendarView extends Activity {
         List<Date> mWeekDate = new ArrayList<Date>();
         int nFirstDay = getDayOfWeekFirstDay(); // 最初の日が何曜日であるか取得
         for(int j = 0; j < nFirstDay; j++){
-            Date date = new Date(); // 空のデータを入れる
-            mWeekDate.add(date);
+            mWeekDate.add(null);
         }
 
         for(int i = 0; i < monthDate.size(); i++){
+            mWeekDate.add(monthDate.get(i));
+
             // 1週間分のデータを入れる
-            if( mWeekDate.size() == WEEKDAYS ){
+            if( mWeekDate.size() == WEEKDAYS || i == (monthDate.size() -1) ) {
                 setWeekDays(mWeekDate);
                 mWeekDate.clear();
             }
-            mWeekDate.add(monthDate.get(i));
         }
     }
 
@@ -119,10 +119,49 @@ public class CalendarView extends Activity {
    *   @ret integer 曜日の値
    */
     private int getDayOfWeekFirstDay(){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DATE, 1);
+        Calendar calendar = (Calendar)mNowCalendar.clone();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        int nDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        nDayOfWeek = ConvDayOfWeek(nDayOfWeek);
+        return nDayOfWeek;
+    }
 
-        return calendar.get(Calendar.DAY_OF_WEEK);
+    /*
+    * 　曜日の値 Calendar.SUNDAY ～　SATURDAY　を内部値に変換する
+    *
+    *   @param num  Calendarクラスの曜日値
+    *
+    *   @ret nDayOfWeek 曜日の値（内部）
+    */
+    private int ConvDayOfWeek(int num){
+        int nDayOfWeek = 0;
+        switch(num){
+            case Calendar.SUNDAY:
+                nDayOfWeek = getResources().getInteger(R.integer.sunday);
+                break;
+            case Calendar.MONDAY:
+                nDayOfWeek = getResources().getInteger(R.integer.monday);
+                break;
+            case Calendar.TUESDAY:
+                nDayOfWeek = getResources().getInteger(R.integer.tuesday);
+                break;
+            case Calendar.WEDNESDAY:
+                nDayOfWeek = getResources().getInteger(R.integer.wednesday);
+                break;
+            case Calendar.THURSDAY:
+                nDayOfWeek = getResources().getInteger(R.integer.thursday);
+                break;
+            case Calendar.FRIDAY:
+                nDayOfWeek = getResources().getInteger(R.integer.friday);
+                break;
+            case Calendar.SATURDAY:
+                nDayOfWeek = getResources().getInteger(R.integer.saturday);
+                break;
+            default:
+                break;
+        }
+
+        return nDayOfWeek;
     }
 
      /*
@@ -134,9 +173,13 @@ public class CalendarView extends Activity {
          LinearLayout mWeekLayout = (LinearLayout)ParentLayout.findViewById((R.id.calendar_date));
 
          LinearLayout mWeekDays = new LinearLayout(this);
-         for(int i = 0; i < WEEKDAYS; i++){
+         for(int i = 0; i < date.size(); i++){
              DateTextView mDateTextView = new DateTextView(this);
-             mDateTextView.setText(String.valueOf(date.get(i).getDate()));  // 日にちをテキストにセット
+             mDateTextView.setViewHeight(this, 5);
+             Date mDate = date.get(i);
+             if( mDate != null ) {
+                 mDateTextView.setText(String.valueOf(mDate.getDate()));  // 日にちをテキストにセット
+             }
              mWeekDays.addView(mDateTextView);
          }
 
@@ -149,7 +192,7 @@ public class CalendarView extends Activity {
     *   @paramc calendar 現在のカレンダー
     */
     public static List<Date> getDateMonth(Calendar calendar){
-        Calendar tCalendar = Calendar.getInstance();
+        Calendar tCalendar = (Calendar)mNowCalendar.clone();
         tCalendar.set(Calendar.DATE, 1);
         List<Date> arrayDate = new ArrayList<Date>();
         while(true){
@@ -175,9 +218,4 @@ public class CalendarView extends Activity {
         return calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH);
     }
 
-
-
-    // XX年　XX月
-
-    // 月ごとに複数回追加する
 }
