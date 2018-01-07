@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="defaultYear">1900</integer>
+    <integer name="defaultMonth">1</integer>
+    <integer name="weekdays">7</integer>
+</resources>
