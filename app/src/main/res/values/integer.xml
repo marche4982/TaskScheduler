@@ -10,6 +10,6 @@
     <integer name="thursday">4</integer>
     <integer name="friday">5</integer>
     <integer name="saturday">6</integer>
-    <integer name="maxCalendar">100</integer>
-    <integer name="firstPosition">50</integer>
+    <integer name="maxCalendar">1000</integer>
+    <integer name="firstPosition">500</integer>
 </resources>

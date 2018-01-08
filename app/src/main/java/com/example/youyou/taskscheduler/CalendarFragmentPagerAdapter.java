@@ -22,6 +22,10 @@ public class CalendarFragmentPagerAdapter extends FragmentPagerAdapter {
     private static int nMaxCalendar = 0;
     private static List<Calendar> calendarList;
 
+    // TODO
+    // 現在のところ、前後500ヵ月分しか取れないようになっているので。
+    // 動的にlistに追加するようにしたほうが良いかも。
+
     public CalendarFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
         calendarList = new ArrayList<Calendar>();
