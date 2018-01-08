@@ -1,10 +1,14 @@
 package com.example.youyou.taskscheduler;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -19,27 +23,36 @@ import java.util.List;
  * Created by youyou on 2018/01/06.
  */
 
-public class CalendarView extends Activity {
+public class CalendarView extends android.support.v4.app.Fragment {
 
     private static final int WEEKDAYS = 7;
-    private static Calendar mNowCalendar;
-
+    private Calendar mCalendar;
+    private Date now;
     private LinearLayout ParentLayout;    // カレンダーの最上位のLinearLayout
 
+
+    /*　カレンダーの表示がおかしい */
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
-        // カレンダーから現在時刻取得
-        mNowCalendar = Calendar.getInstance();
-        Date now = mNowCalendar.getTime();
+    public void setCalendar(Calendar calendar){
+        this.mCalendar = calendar;
+        now = this.mCalendar.getTime();
+    }
 
-        ParentLayout = (LinearLayout)View.inflate(this, R.layout.activity_main, null);
-        setContentView(ParentLayout);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        View view = inflater.inflate(R.layout.calendar_main, null);
+        ParentLayout = (LinearLayout)view.findViewById(R.id.calendar_parent);
 
         setCalendarTitle(now);
         setDayofWeek();
         setMonthDays();
+
+        return view;
     }
 
     /*
@@ -75,10 +88,10 @@ public class CalendarView extends Activity {
     private void setDayofWeek(){
         LinearLayout mWeekLayout = (LinearLayout)ParentLayout.findViewById((R.id.calendar_date));
 
-        LinearLayout mWeekTitle = new LinearLayout(this);
+        LinearLayout mWeekTitle = new LinearLayout(getActivity());
 
         for(int i = 0; i < 7; i++){
-            DateTextView mDateTextView = new DateTextView(this);
+            DateTextView mDateTextView = new DateTextView(getActivity(), ParentLayout);
 
             // 曜日を表示
             String[] strDayOfTheWeek = getResources().getStringArray(R.array.day_of_the_week);
@@ -94,7 +107,7 @@ public class CalendarView extends Activity {
    *
    */
     private void setMonthDays(){
-        List<Date> monthDate = getDateMonth(mNowCalendar);
+        List<Date> monthDate = getDateMonth(mCalendar);
 
         List<Date> mWeekDate = new ArrayList<Date>();
         int nFirstDay = getDayOfWeekFirstDay(); // 最初の日が何曜日であるか取得
@@ -119,7 +132,7 @@ public class CalendarView extends Activity {
    *   @ret integer 曜日の値
    */
     private int getDayOfWeekFirstDay(){
-        Calendar calendar = (Calendar)mNowCalendar.clone();
+        Calendar calendar = (Calendar)mCalendar.clone();
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         int nDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         nDayOfWeek = ConvDayOfWeek(nDayOfWeek);
@@ -171,18 +184,16 @@ public class CalendarView extends Activity {
     */
      private void setWeekDays(List<Date> date){
          LinearLayout mWeekLayout = (LinearLayout)ParentLayout.findViewById((R.id.calendar_date));
-
-         LinearLayout mWeekDays = new LinearLayout(this);
+         LinearLayout mWeekDays = new LinearLayout(getActivity());
          for(int i = 0; i < date.size(); i++){
-             DateTextView mDateTextView = new DateTextView(this);
-             mDateTextView.setViewHeight(this, 5);
+             DateTextView mDateTextView = new DateTextView(getActivity(), ParentLayout);
+             mDateTextView.setViewHeight(getActivity(), 5);
              Date mDate = date.get(i);
              if( mDate != null ) {
                  mDateTextView.setText(String.valueOf(mDate.getDate()));  // 日にちをテキストにセット
              }
              mWeekDays.addView(mDateTextView);
          }
-
          mWeekLayout.addView(mWeekDays);
      }
 
@@ -191,13 +202,13 @@ public class CalendarView extends Activity {
     *
     *   @paramc calendar 現在のカレンダー
     */
-    public static List<Date> getDateMonth(Calendar calendar){
-        Calendar tCalendar = (Calendar)mNowCalendar.clone();
+    public List<Date> getDateMonth(Calendar calendar){
+        Calendar tCalendar = (Calendar)mCalendar.clone();
         tCalendar.set(Calendar.DATE, 1);
         List<Date> arrayDate = new ArrayList<Date>();
         while(true){
             // 違う月になったら、抜ける
-            if( IsSameMonth(mNowCalendar, tCalendar) == false ){
+            if( IsSameMonth(mCalendar, tCalendar) == false ){
                 break;
             }
             arrayDate.add(tCalendar.getTime()); // date をarray　に詰める

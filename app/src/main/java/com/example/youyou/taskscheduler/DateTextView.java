@@ -1,6 +1,7 @@
 package com.example.youyou.taskscheduler;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Point;
 import  android.support.v7.widget.AppCompatTextView;
@@ -14,8 +15,11 @@ import android.view.View;
 
 public class DateTextView extends android.support.v7.widget.AppCompatTextView{
 
-    public DateTextView(Activity activity){
+    private View mParentView;
+
+    public DateTextView(Activity activity, View mParentView){
         super(activity);
+        this.mParentView = mParentView;
 
         int nWeekDays = getResources().getInteger(R.integer.weekdays);
         Point point = getDisplaySize(activity);
@@ -35,13 +39,8 @@ public class DateTextView extends android.support.v7.widget.AppCompatTextView{
     *   @param nLines  日付欄の行数
     */
     public void setViewHeight(Activity activity, int nLines){
-        int nHeight ;
-        Point point = getDisplaySize(activity);
+        int nHeight;
 
-        View view = activity.findViewById(R.id.calendar_date);
-        nHeight = view.getLayoutParams().height / nLines;
-        //nHeight = point.y / nLines;
-        //this.setHeight(nHeight);
     }
 
     /*
