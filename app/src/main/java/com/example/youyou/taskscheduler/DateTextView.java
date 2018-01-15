@@ -1,13 +1,15 @@
 package com.example.youyou.taskscheduler;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
-import  android.support.v7.widget.AppCompatTextView;
+import android.os.Bundle;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+
+import java.util.Date;
 
 /**
  * Created by youyou on 2018/01/07.
@@ -16,8 +18,9 @@ import android.view.View;
 public class DateTextView extends android.support.v7.widget.AppCompatTextView{
 
     private View mParentView;
+    private Date mDate;
 
-    public DateTextView(Activity activity, View mParentView){
+    public DateTextView(final Activity activity, View mParentView){
         super(activity);
         this.mParentView = mParentView;
 
@@ -29,7 +32,23 @@ public class DateTextView extends android.support.v7.widget.AppCompatTextView{
         this.setTextSize(25);                // 文字サイズ：20
         this.setWidth(mViewWidth);           // 7等分
         this.setHeight(200);
+
+        this.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if( event.getAction() == MotionEvent.ACTION_BUTTON_PRESS ){
+                    Intent intent = new Intent(activity, ToDoListView.class);
+                    Bundle bundle = new Bundle();
+                    intent.putExtra(getResources().getString(R.string.bundle_time), mDate.getTime());
+                    activity.startActivity(intent);
+                }
+                return false;
+            }
+        });
     }
+
+
+
 
     /*
     * 　ビューの高さを設定する.
@@ -41,6 +60,17 @@ public class DateTextView extends android.support.v7.widget.AppCompatTextView{
     public void setViewHeight(Activity activity, int nLines){
         int nHeight;
 
+    }
+
+    /*
+    *  ToDoListテーブルに渡すための 日付セット
+    *
+    *   @param activity activity
+    *   @param nLines  日付欄の行数
+    */
+    public void setDate(Date date){
+        this.mDate = date;
+        this.setText(this.mDate.getDate());
     }
 
     /*

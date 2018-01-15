@@ -190,7 +190,7 @@ public class CalendarView extends android.support.v4.app.Fragment {
              mDateTextView.setViewHeight(getActivity(), 5);
              Date mDate = date.get(i);
              if( mDate != null ) {
-                 mDateTextView.setText(String.valueOf(mDate.getDate()));  // 日にちをテキストにセット
+                 mDateTextView.setDate(mDate);
              }
              mWeekDays.addView(mDateTextView);
          }

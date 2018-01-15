@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TaskScheduler</string>
+    <string name="bundle_time">time</string>
 </resources>
