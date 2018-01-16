@@ -23,6 +23,8 @@ public class ToDoListView extends Activity {
         this.mDate.setTime(time);
     }
 
+
+
     // 明日はここから
     // ArrrayAdapter のクラスを使って。
     // list_task に arrayAdapter をセットする
