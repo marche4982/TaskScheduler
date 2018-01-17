@@ -3,6 +3,7 @@ package com.example.youyou.taskscheduler;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ListView;
 
 import java.util.Date;
 
@@ -13,6 +14,7 @@ import java.util.Date;
 public class ToDoListView extends Activity {
 
     private Date mDate;
+    private ListView listTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -21,6 +23,10 @@ public class ToDoListView extends Activity {
         Intent intent = getIntent();
         Long time = intent.getLongExtra(getResources().getString(R.string.bundle_time), 0);
         this.mDate.setTime(time);
+
+        listTask = (ListView)findViewById(R.id.list_task);
+        listTask.setAdapter()
+
     }
 
 
