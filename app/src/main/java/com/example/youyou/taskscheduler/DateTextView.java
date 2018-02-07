@@ -29,7 +29,7 @@ public class DateTextView extends android.support.v7.widget.AppCompatTextView{
         int mViewWidth = point.x / nWeekDays;
 
         this.setGravity(Gravity.CENTER);    // 中央に表示
-        this.setTextSize(25);                // 文字サイズ：20
+        this.setTextSize(15);                // 文字サイズ：20
         this.setWidth(mViewWidth);           // 7等分
         this.setHeight(200);
 
@@ -46,9 +46,6 @@ public class DateTextView extends android.support.v7.widget.AppCompatTextView{
             }
         });
     }
-
-
-
 
     /*
     * 　ビューの高さを設定する.
@@ -70,11 +67,12 @@ public class DateTextView extends android.support.v7.widget.AppCompatTextView{
     */
     public void setDate(Date date){
         this.mDate = date;
-        this.setText(this.mDate.getDate());
+        this.setText(String.valueOf(this.mDate.getDate()));
+
     }
 
     /*
-    * 　画面サイズを返す
+    * 　画面サイズを返す b
     *
     *   @param activity activity
     */

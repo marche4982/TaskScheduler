@@ -10,7 +10,7 @@ import io.realm.RealmResults;
 
 public class TaskScheduler extends Application {
 
-    public DBOperate db;
+    public static DBOperate db;
 
     @Override
     public void onCreate(){

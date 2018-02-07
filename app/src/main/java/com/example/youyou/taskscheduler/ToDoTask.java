@@ -1,5 +1,6 @@
 package com.example.youyou.taskscheduler;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 
 import java.util.Date;
@@ -7,6 +8,8 @@ import java.util.Date;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
+
+import static com.example.youyou.taskscheduler.TaskScheduler.db;
 
 /**
  * Created by youyou on 2018/01/16.
@@ -24,12 +27,15 @@ public class ToDoTask extends RealmObject {
 
     public String taskMemo; // 説明用のメモ
 
-    public Boolean bHasImage;   // 画像有り無しフラグ
-    public Image image;     // 画像
+    //public Boolean bHasImage;   // 画像有り無しフラグ
+    //public Bitmap image;     // 画像
 
     // getter setter
     public int getId(){ return this.id;}
     public void setId(int id){ this.id = id;};
+
+
+
 
     public Date getStartDate(){return this.startDate;}
     public void setStartDate(Date date){ this.startDate = date;}
@@ -42,19 +48,18 @@ public class ToDoTask extends RealmObject {
 
     public Boolean getbIsChecked(){ return this.bIsChecked;}
     public void setbIsChecked(Boolean bIsChecked){ this.bIsChecked = bIsChecked;}
+    public void updateCheck(boolean checked){
+        this.setbIsChecked(checked);
+        db.save(this);
+    }
 
     public String getTaskMemo(){return this.taskMemo;}
     public void setTaskMemo(String taskMemo){this.taskMemo = taskMemo;}
 
-    public Boolean getbHasImage(){return this.bHasImage;}
-    public void setbHasImage(Boolean bHasImage){ this.bHasImage = bHasImage;}
+    //public Boolean getbHasImage(){return this.bHasImage;}
+    //public void setbHasImage(Boolean bHasImage){ this.bHasImage = bHasImage;}
 
-    public Image getImage(){return this.image;}
-    public void setImage(Image image){this.image = image;}
-
-
-
-
-
+    //public Bitmap getImage(){return this.image;}
+    //public void setImage(Bitmap image){this.image = image;}
 
 }

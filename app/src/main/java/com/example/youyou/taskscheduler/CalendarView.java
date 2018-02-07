@@ -26,12 +26,9 @@ import java.util.List;
 public class CalendarView extends android.support.v4.app.Fragment {
 
     private static final int WEEKDAYS = 7;
-    private Calendar mCalendar;
-    private Date now;
+    private Calendar mCalendar = null;
+    private static Date now;
     private LinearLayout ParentLayout;    // カレンダーの最上位のLinearLayout
-
-
-    /*　カレンダーの表示がおかしい */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +45,7 @@ public class CalendarView extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.calendar_main, null);
         ParentLayout = (LinearLayout)view.findViewById(R.id.calendar_parent);
 
+        setCalendar(CalendarFragmentPagerAdapter.getPresentCalendar());
         setCalendarTitle(now);
         setDayofWeek();
         setMonthDays();

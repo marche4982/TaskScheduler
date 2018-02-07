@@ -28,8 +28,8 @@ public class DBOperate {
     *
     *   @param task 取得対象のタスク
     */
-    private ToDoTask search(ToDoTask task){
-        return realm.where(ToDoTask.class).equalTo("id", task.getId()).findFirst();
+    public ToDoTask search(int id){
+        return realm.where(ToDoTask.class).equalTo("id", id).findFirst();
     }
 
     public RealmResults<ToDoTask> getAll(){
@@ -55,7 +55,7 @@ public class DBOperate {
     */
     public void delete(ToDoTask task){
         realm.beginTransaction();
-        search(task).deleteFromRealm();
+        search(task.getId()).deleteFromRealm();
         realm.commitTransaction();
     }
 
