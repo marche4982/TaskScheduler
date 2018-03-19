@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".CalendarView"/>
         <activity android:name=".NewTaskCreate"/>
+        <activity android:name=".ToDoListView"/>
     </application>
 
 </manifest>

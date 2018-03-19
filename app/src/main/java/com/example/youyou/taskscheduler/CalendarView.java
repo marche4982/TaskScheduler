@@ -2,6 +2,7 @@ package com.example.youyou.taskscheduler;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.text.Layout;

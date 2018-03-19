@@ -25,17 +25,21 @@ public class ToDoListView extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.todo_list);
 
         Intent intent = getIntent();
         Long time = intent.getLongExtra(getResources().getString(R.string.bundle_time), 0);
+
+        this.mDate = new Date();
         this.mDate.setTime(time);
 
-        listTask = (ListView)findViewById(R.id.list_task);
 
         db.getAll();
         task = db.getTaskwithDate(this.mDate);
 
         TaskListAdapter adapter = new TaskListAdapter(getApplicationContext(), 0, task);
+
+        listTask = (ListView)findViewById(R.id.list_task);
         listTask.setAdapter(adapter);
     }
 

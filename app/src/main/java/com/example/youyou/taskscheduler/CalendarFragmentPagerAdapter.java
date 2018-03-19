@@ -35,7 +35,6 @@ public class CalendarFragmentPagerAdapter extends FragmentPagerAdapter {
                 Calendar tCalendar = (Calendar) nowCalendar.clone();
                 tCalendar.set(MONTH, tCalendar.get(MONTH) + i);
                 calendarList.add((Calendar) tCalendar.clone());
-                ;
             }
         }
     }

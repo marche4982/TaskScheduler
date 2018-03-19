@@ -2,6 +2,7 @@ package com.example.youyou.taskscheduler;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
@@ -11,6 +12,9 @@ import android.view.View;
 
 import java.util.Date;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 /**
  * Created by youyou on 2018/01/07.
  */
@@ -19,6 +23,7 @@ public class DateTextView extends android.support.v7.widget.AppCompatTextView{
 
     private View mParentView;
     private Date mDate;
+    private Boolean bFocused = FALSE;
 
     public DateTextView(final Activity activity, View mParentView){
         super(activity);
@@ -36,7 +41,7 @@ public class DateTextView extends android.support.v7.widget.AppCompatTextView{
         this.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if( event.getAction() == MotionEvent.ACTION_BUTTON_PRESS ){
+                if( event.getAction() == MotionEvent.ACTION_DOWN ){
                     Intent intent = new Intent(activity, ToDoListView.class);
                     Bundle bundle = new Bundle();
                     intent.putExtra(getResources().getString(R.string.bundle_time), mDate.getTime());
@@ -45,6 +50,10 @@ public class DateTextView extends android.support.v7.widget.AppCompatTextView{
                 return false;
             }
         });
+    }
+
+    public void setBackGroundColor(int color){
+        this.setBackgroundColor(color);
     }
 
     /*
