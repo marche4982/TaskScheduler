@@ -39,7 +39,6 @@ public class TaskListAdapter extends ArrayAdapter<ToDoTask> {
         /* View が追加された時の動きを入れる */
         /* チェックボックス */
         taskCheckBox = (CheckBox)convertView.findViewById(R.id.task_check);
-        taskCheckBox.setChecked(task.bIsChecked);
         taskCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

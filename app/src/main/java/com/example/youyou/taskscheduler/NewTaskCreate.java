@@ -51,20 +51,27 @@ public class NewTaskCreate extends Activity {
         newTask.setTaskMemo((memoEdit.getText().toString()));
         newTask.setStartDate(StringToDate(startEdit.getText().toString()));
         newTask.setEndDate(StringToDate(endEdit.getText().toString()));
+
+        if( newTask.checkAll() == false){
+            return;
+        }
+
         TaskScheduler.db.save(newTask);
     }
 
     private Date StringToDate(String strDate){
-        Date date = new Date();
+        Date date = null;
 
-        if( strDate.length() >= 14 ) {
-            String year = strDate.substring(0, 3);
-            date.setYear(Integer.parseInt(year));
+        if( strDate.length() == 8 ) {
+            date = new Date();
 
-            String month = strDate.substring(4, 5);
-            date.setMonth(Integer.parseInt(month));
+            String year = strDate.substring(0, 4);
+            date.setYear(Integer.parseInt(year)-1900);
 
-            String day = strDate.substring(6, 7);
+            String month = strDate.substring(4, 6);
+            date.setMonth(Integer.parseInt(month)-1);
+
+            String day = strDate.substring(6, 8);
             date.setDate(Integer.parseInt(day));
         }
 

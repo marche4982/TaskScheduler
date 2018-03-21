@@ -18,7 +18,7 @@ public class DBOperate {
 
     DBOperate(Context context){
         Realm.init(context);
-        RealmConfiguration rConfig = new RealmConfiguration.Builder().build();
+        RealmConfiguration rConfig = new RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(rConfig);
         realm = Realm.getInstance(rConfig);
     }
@@ -65,7 +65,12 @@ public class DBOperate {
     *   @param date 取得する日付
     */
     public RealmResults<ToDoTask> getTaskwithDate(Date date){
-        return realm.where(ToDoTask.class).greaterThanOrEqualTo("startDate", date).lessThanOrEqualTo("endDate", date).findAll();
+        RealmResults<ToDoTask> all = realm.where(ToDoTask.class).findAll();
+        RealmResults<ToDoTask> a = realm.where(ToDoTask.class).lessThanOrEqualTo("startDate", date).findAll();
+        RealmResults<ToDoTask> b = realm.where(ToDoTask.class).greaterThanOrEqualTo("startDate", date).findAll();
+        RealmResults<ToDoTask> d = realm.where(ToDoTask.class).lessThanOrEqualTo("startDate", date).greaterThanOrEqualTo("endDate", date).findAll();;
+
+        return realm.where(ToDoTask.class).lessThanOrEqualTo("startDate", date).greaterThanOrEqualTo("endDate", date).findAll();
     }
 
 }
