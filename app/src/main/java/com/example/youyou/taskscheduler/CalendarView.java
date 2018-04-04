@@ -28,7 +28,7 @@ public class CalendarView extends android.support.v4.app.Fragment {
 
     private static final int WEEKDAYS = 7;
     private Calendar mCalendar = null;
-    private static Date now;
+    private Date now;
     private LinearLayout ParentLayout;    // カレンダーの最上位のLinearLayout
 
     @Override
@@ -46,7 +46,10 @@ public class CalendarView extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.calendar_main, null);
         ParentLayout = (LinearLayout)view.findViewById(R.id.calendar_parent);
 
-        setCalendar(CalendarFragmentPagerAdapter.getPresentCalendar());
+
+        // カレンダーをセットしないと、表示ができない。
+        // しかし、ここで正しいカレンダーを設定したいが・・・？
+        //setCalendar(CalendarFragmentPagerAdapter.getPresentCalendar());
         setCalendarTitle(now);
         setDayofWeek();
         setMonthDays();

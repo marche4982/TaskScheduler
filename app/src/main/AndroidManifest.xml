@@ -21,6 +21,7 @@
         <activity android:name=".CalendarView"/>
         <activity android:name=".NewTaskCreate"/>
         <activity android:name=".ToDoListView"/>
+        <activity android:name=".ChooseDate"/>
     </application>
 
 </manifest>

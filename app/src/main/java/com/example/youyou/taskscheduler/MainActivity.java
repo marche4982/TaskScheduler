@@ -26,19 +26,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         activity = this;
 
-        /*
-        com.example.youyou.taskscheduler.CalendarView fragment = new com.example.youyou.taskscheduler.CalendarView();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.main, fragment, "CalendarFragment");
-        transaction.commit();
-        */
-
         FragmentManager manager = getSupportFragmentManager();
         viewPager = (ViewPager)findViewById(R.id.calendar_pager);
         CalendarFragmentPagerAdapter.setMaxCalendar(getResources().getInteger(R.integer.maxCalendar));
         CalendarFragmentPagerAdapter adapter = new CalendarFragmentPagerAdapter(manager);
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(getResources().getInteger(R.integer.firstPosition));
+        viewPager.setCurrentItem(CalendarList.getNowCalendarIndex());
 
 
         newTaskButton = (Button)findViewById(R.id.newTaskButton);

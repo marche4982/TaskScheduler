@@ -21,11 +21,13 @@ public class NewTaskCreate extends Activity {
     private EditText memoEdit;
     private EditText startEdit;
     private EditText endEdit;
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle bundle){
         super.onCreate(bundle);
         setContentView(R.layout.newtask_create);
+        activity = this;
 
         OkButton = (Button)findViewById(R.id.ok_button);
         OkButton.setOnTouchListener(new View.OnTouchListener() {
@@ -41,8 +43,24 @@ public class NewTaskCreate extends Activity {
 
         taskNameEdit = (EditText)findViewById(R.id.edit_taskname);
         memoEdit = (EditText)findViewById(R.id.edit_memo);
+
         startEdit = (EditText)findViewById(R.id.edit_startdate);
+        startEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, ChooseDate.class);
+                startActivity(intent);
+            }
+        });
+
         endEdit = (EditText)findViewById(R.id.edit_enddate);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Long time = data.getLongExtra("inputDate", 0);
+        Date inputDate = new Date();
+        inputDate.setTime(time);
     }
 
     public void saveTask(){
