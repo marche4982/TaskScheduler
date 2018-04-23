@@ -28,12 +28,14 @@ public class CalendarView extends android.support.v4.app.Fragment {
 
     private static final int WEEKDAYS = 7;
     private Calendar mCalendar = null;
+    private Calendar today;
     private Date now;
     private LinearLayout ParentLayout;    // カレンダーの最上位のLinearLayout
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        today = Calendar.getInstance();
     }
 
     public void setCalendar(Calendar calendar){
@@ -193,6 +195,7 @@ public class CalendarView extends android.support.v4.app.Fragment {
              Date mDate = date.get(i);
              if( mDate != null ) {
                  mDateTextView.setDate(mDate);
+                 mDateTextView.setTodayColor(today.getTime());
              }
              mWeekDays.addView(mDateTextView);
          }

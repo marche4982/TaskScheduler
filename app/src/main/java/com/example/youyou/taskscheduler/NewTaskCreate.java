@@ -58,7 +58,7 @@ public class NewTaskCreate extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Long time = data.getLongExtra("inputDate", 0);
+        Long time = data.getLongExtra("touchdDate", 0);
         Date inputDate = new Date();
         inputDate.setTime(time);
     }

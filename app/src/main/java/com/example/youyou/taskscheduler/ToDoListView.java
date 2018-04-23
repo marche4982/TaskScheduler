@@ -33,7 +33,7 @@ public class ToDoListView extends Activity {
         this.mDate = new Date();
         this.mDate.setTime(time);
 
- 
+
         db.getAll();
         task = db.getTaskwithDate(this.mDate);
 

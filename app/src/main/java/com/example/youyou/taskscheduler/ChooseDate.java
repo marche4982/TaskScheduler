@@ -1,11 +1,14 @@
 package com.example.youyou.taskscheduler;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+
+import java.util.Date;
 
 /**
  * Created by youyou on 2018/03/21.
@@ -27,9 +30,24 @@ public class ChooseDate extends AppCompatActivity {
         CalendarFragmentPagerAdapter.setMaxCalendar(getResources().getInteger(R.integer.maxCalendar));
         CalendarFragmentPagerAdapter adapter = new CalendarFragmentPagerAdapter(manager);
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(getResources().getInteger(R.integer.firstPosition));
+        viewPager.setCurrentItem(CalendarList.getNowCalendarIndex());
     }
 
+    /*
+    CalendarFragmentPager　でどこの日付がタッチされたかを
+    管理すればよい
+     */
 
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
+        Date touchedDate = CalendarFragmentPagerAdapter.GetTouchedDate();
+
+        Intent data = new Intent();
+        data.putExtra("touchedDate", touchedDate);
+        setResult(0, data);
+    }
 
 }
