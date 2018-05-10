@@ -49,7 +49,7 @@ public class NewTaskCreate extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity, ChooseDate.class);
-                startActivity(intent);
+                startActivityForResult(intent, 0);
             }
         });
 
@@ -61,6 +61,8 @@ public class NewTaskCreate extends Activity {
         Long time = data.getLongExtra("touchdDate", 0);
         Date inputDate = new Date();
         inputDate.setTime(time);
+
+        startEdit.setText(inputDate.toString());
     }
 
     public void saveTask(){

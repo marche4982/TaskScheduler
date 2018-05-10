@@ -31,15 +31,9 @@ public class ToDoTask extends RealmObject {
 
     public String taskMemo; // 説明用のメモ
 
-    //public Boolean bHasImage;   // 画像有り無しフラグ
-    //public Bitmap image;     // 画像
-
     // getter setter
     public int getId(){ return this.id;}
     public void setId(int id){ this.id = id;};
-
-
-
 
     public Date getStartDate(){return this.startDate;}
     public void setStartDate(Date date){ this.startDate = date;}
@@ -52,9 +46,9 @@ public class ToDoTask extends RealmObject {
 
     public Boolean getbIsChecked(){ return this.bIsChecked;}
     public void setbIsChecked(Boolean bIsChecked){ this.bIsChecked = bIsChecked;}
+
     public void updateCheck(boolean checked){
-        this.setbIsChecked(checked);
-        db.save(this);
+        db.updateCheck(this, checked);
     }
 
     public String getTaskMemo(){return this.taskMemo;}

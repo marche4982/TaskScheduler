@@ -48,10 +48,6 @@ public class CalendarView extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.calendar_main, null);
         ParentLayout = (LinearLayout)view.findViewById(R.id.calendar_parent);
 
-
-        // カレンダーをセットしないと、表示ができない。
-        // しかし、ここで正しいカレンダーを設定したいが・・・？
-        //setCalendar(CalendarFragmentPagerAdapter.getPresentCalendar());
         setCalendarTitle(now);
         setDayofWeek();
         setMonthDays();

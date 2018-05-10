@@ -48,6 +48,13 @@ public class DBOperate {
         realm.commitTransaction();
     }
 
+    public void updateCheck(ToDoTask task, boolean check){
+        realm.beginTransaction();
+        task.setbIsChecked(check);
+        realm.insertOrUpdate(task);
+        realm.commitTransaction();
+    }
+
     /*
     *   タスクを削除する
     *
