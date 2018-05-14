@@ -1,12 +1,15 @@
 package com.example.youyou.taskscheduler;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.Date;
 
@@ -19,9 +22,10 @@ public class NewTaskCreate extends Activity {
     private Button OkButton;
     private EditText taskNameEdit;
     private EditText memoEdit;
-    private EditText startEdit;
-    private EditText endEdit;
+    private TextView startDate;
+    private TextView endDate;
     private Activity activity;
+
 
     @Override
     protected void onCreate(Bundle bundle){
@@ -44,33 +48,43 @@ public class NewTaskCreate extends Activity {
         taskNameEdit = (EditText)findViewById(R.id.edit_taskname);
         memoEdit = (EditText)findViewById(R.id.edit_memo);
 
-        startEdit = (EditText)findViewById(R.id.edit_startdate);
-        startEdit.setOnClickListener(new View.OnClickListener() {
+        startDate = (TextView)findViewById(R.id.textview_startdate);
+        startDate.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(activity, ChooseDate.class);
-                startActivityForResult(intent, 0);
+            public void onClick(View v){
+                CustomDialogFragment dialog = new CustomDialogFragment();
+                dialog.show(getFragmentManager(), "startDate");
             }
         });
 
-        endEdit = (EditText)findViewById(R.id.edit_enddate);
+        endDate = (TextView)findViewById(R.id.textview_endDate);
+        endDate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                CustomDialogFragment dialog = new CustomDialogFragment();
+                dialog.show(getFragmentManager(), "endDate");
+            }
+        });
+
+        endDate = (TextView)findViewById(R.id.textview_endDate);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Long time = data.getLongExtra("touchdDate", 0);
-        Date inputDate = new Date();
-        inputDate.setTime(time);
+    public void setStartDate(String str){
+        this.startDate.setText(str);
+    }
 
-        startEdit.setText(inputDate.toString());
+    public void setEndDate(String str){
+        this.endDate.setText(str);
     }
 
     public void saveTask(){
         ToDoTask newTask = new ToDoTask();
         newTask.setTaskName(taskNameEdit.getText().toString());
         newTask.setTaskMemo((memoEdit.getText().toString()));
-        newTask.setStartDate(StringToDate(startEdit.getText().toString()));
-        newTask.setEndDate(StringToDate(endEdit.getText().toString()));
+
+        // newTask.setStartDate(startPicker.get);
+        //
+        // picker からDate をいれる
 
         if( newTask.checkAll() == false){
             return;
