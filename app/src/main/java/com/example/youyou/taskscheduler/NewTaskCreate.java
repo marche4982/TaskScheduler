@@ -81,10 +81,8 @@ public class NewTaskCreate extends Activity {
         ToDoTask newTask = new ToDoTask();
         newTask.setTaskName(taskNameEdit.getText().toString());
         newTask.setTaskMemo((memoEdit.getText().toString()));
-
-        // newTask.setStartDate(startPicker.get);
-        //
-        // picker からDate をいれる
+        newTask.setStartDate(StringToDate(startDate.getText().toString()));
+        newTask.setEndDate(StringToDate(endDate.getText().toString()));
 
         if( newTask.checkAll() == false){
             return;

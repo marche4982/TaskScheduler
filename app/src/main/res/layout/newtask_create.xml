@@ -89,6 +89,7 @@
             android:id="@+id/textview_startdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="15pt"
             android:visibility="visible"></TextView>
 
     </LinearLayout>
@@ -111,6 +112,7 @@
             android:id="@+id/textview_endDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="15pt"
             android:visibility="visible"></TextView>
 
 

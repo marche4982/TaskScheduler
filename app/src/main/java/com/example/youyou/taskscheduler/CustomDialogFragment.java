@@ -23,7 +23,7 @@ public class CustomDialogFragment extends DialogFragment {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String dateStr = String.format("%04d", year) + String.format("%02d", month) + String.format("%02d", dayOfMonth);
+                        String dateStr = String.format("%04d", year) + String.format("%02d", month+1) + String.format("%02d", dayOfMonth);
                         // MainActivityのインスタンスを取得
                         NewTaskCreate activity = (NewTaskCreate) getActivity();
 
@@ -39,7 +39,7 @@ public class CustomDialogFragment extends DialogFragment {
                 calendar.get(Calendar.MONTH), // 初期選択月
                 calendar.get(Calendar.DAY_OF_MONTH) // 初期選択日
         );
-        
+
 
         return dateBuilder;
     }

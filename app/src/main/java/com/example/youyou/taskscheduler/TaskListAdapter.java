@@ -30,6 +30,8 @@ public class TaskListAdapter extends ArrayAdapter<ToDoTask> {
         infalter = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    /* タスクをクリックした後に、メモなどを表示するように変える */
+
     public View getView(final int position, View convertView, ViewGroup parent){
         if( convertView == null ){
             convertView = infalter.inflate(R.layout.todo_task, null);
@@ -42,7 +44,6 @@ public class TaskListAdapter extends ArrayAdapter<ToDoTask> {
         taskCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                /* TODO このtask更新は間違ってるかも */
                 task.updateCheck(isChecked);
             }
         });
