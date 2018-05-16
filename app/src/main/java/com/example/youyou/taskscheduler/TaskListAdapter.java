@@ -31,6 +31,7 @@ public class TaskListAdapter extends ArrayAdapter<ToDoTask> {
     }
 
     /* タスクをクリックした後に、メモなどを表示するように変える */
+    /* タスクを2件入れると消える？ */
 
     public View getView(final int position, View convertView, ViewGroup parent){
         if( convertView == null ){

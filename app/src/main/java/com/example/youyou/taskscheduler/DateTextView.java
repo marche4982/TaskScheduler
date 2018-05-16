@@ -103,9 +103,6 @@ public class DateTextView extends android.support.v7.widget.AppCompatTextView{
          this.mDate.getDate() == today.getDate() ) {
             this.setBackgroundColor(Color.YELLOW);
         }
-        else{
-            this.setBackGroundColor(Color.WHITE);
-        }
     }
 
     /*

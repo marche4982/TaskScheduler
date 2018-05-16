@@ -9,11 +9,10 @@
     android:id="@+id/main">
 
     <android.support.v4.view.ViewPager
+        android:id="@+id/calendar_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/calendar_pager"
-        android:layout_weight="1">
-    </android.support.v4.view.ViewPager>
+        android:layout_weight="1"></android.support.v4.view.ViewPager>
 
     <LinearLayout
         android:id="@+id/calendar_button"
@@ -26,20 +25,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="" />
 
         <Button
             android:id="@+id/newTaskButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="New Task" />
     </LinearLayout>
 </LinearLayout>

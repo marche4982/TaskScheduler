@@ -7,6 +7,7 @@ import java.util.Date;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by youyou on 2018/01/16.
@@ -66,17 +67,16 @@ public class DBOperate {
         realm.commitTransaction();
     }
 
+    public int getNewId(){
+        return realm.where(ToDoTask.class).findAllSorted("id", Sort.DESCENDING).first().getId() + 1;
+    }
+
     /*
     *   日付を指定してタスク取得
     *
     *   @param date 取得する日付
     */
     public RealmResults<ToDoTask> getTaskwithDate(Date date){
-        RealmResults<ToDoTask> all = realm.where(ToDoTask.class).findAll();
-        RealmResults<ToDoTask> a = realm.where(ToDoTask.class).lessThanOrEqualTo("startDate", date).findAll();
-        RealmResults<ToDoTask> b = realm.where(ToDoTask.class).greaterThanOrEqualTo("startDate", date).findAll();
-        RealmResults<ToDoTask> d = realm.where(ToDoTask.class).lessThanOrEqualTo("startDate", date).greaterThanOrEqualTo("endDate", date).findAll();;
-
         return realm.where(ToDoTask.class).lessThanOrEqualTo("startDate", date).greaterThanOrEqualTo("endDate", date).findAll();
     }
 

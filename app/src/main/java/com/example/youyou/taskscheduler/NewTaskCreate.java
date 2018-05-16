@@ -26,7 +26,6 @@ public class NewTaskCreate extends Activity {
     private TextView endDate;
     private Activity activity;
 
-
     @Override
     protected void onCreate(Bundle bundle){
         super.onCreate(bundle);
@@ -79,6 +78,7 @@ public class NewTaskCreate extends Activity {
 
     public void saveTask(){
         ToDoTask newTask = new ToDoTask();
+        newTask.setId(TaskScheduler.db.getNewId());
         newTask.setTaskName(taskNameEdit.getText().toString());
         newTask.setTaskMemo((memoEdit.getText().toString()));
         newTask.setStartDate(StringToDate(startDate.getText().toString()));
