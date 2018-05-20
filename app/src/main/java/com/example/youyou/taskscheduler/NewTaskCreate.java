@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.sql.Time;
 import java.util.Date;
 
 /**
@@ -24,13 +26,20 @@ public class NewTaskCreate extends Activity {
     private EditText memoEdit;
     private TextView startDate;
     private TextView endDate;
+    private TextView remindTime;
+    private CheckBox isRemind;
     private Activity activity;
+    private Date defDate;
 
     @Override
     protected void onCreate(Bundle bundle){
         super.onCreate(bundle);
         setContentView(R.layout.newtask_create);
         activity = this;
+
+        Intent intent = getIntent();
+        defDate = new Date();
+        defDate.setTime(intent.getLongExtra("date", 0));
 
         OkButton = (Button)findViewById(R.id.ok_button);
         OkButton.setOnTouchListener(new View.OnTouchListener() {
@@ -45,6 +54,9 @@ public class NewTaskCreate extends Activity {
         });
 
         taskNameEdit = (EditText)findViewById(R.id.edit_taskname);
+        taskNameEdit.setFocusable(true);                // フォーカスを有効に
+        taskNameEdit.setFocusableInTouchMode(true);     // タッチでのフォーカス有効
+
         memoEdit = (EditText)findViewById(R.id.edit_memo);
 
         startDate = (TextView)findViewById(R.id.textview_startdate);
@@ -55,6 +67,7 @@ public class NewTaskCreate extends Activity {
                 dialog.show(getFragmentManager(), "startDate");
             }
         });
+        startDate.setText(setDate(defDate));
 
         endDate = (TextView)findViewById(R.id.textview_endDate);
         endDate.setOnClickListener(new View.OnClickListener(){
@@ -64,8 +77,26 @@ public class NewTaskCreate extends Activity {
                 dialog.show(getFragmentManager(), "endDate");
             }
         });
+        endDate.setText(setDate(defDate));
 
         endDate = (TextView)findViewById(R.id.textview_endDate);
+
+        isRemind = (CheckBox)findViewById(R.id.remindCheckBox);
+
+        remindTime = (TextView)findViewById(R.id.remindTime);
+        remindTime.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    TimeDialogFragment dialog = new TimeDialogFragment();
+                    dialog.show(getFragmentManager(), "remindTime");
+                }
+          }
+        );
+    }
+
+    public String setDate(Date date){
+        String str = String.format("%04d%02d%02d", date.getYear()+1900, date.getMonth(), date.getDate());
+        return str;
     }
 
     public void setStartDate(String str){
@@ -76,6 +107,8 @@ public class NewTaskCreate extends Activity {
         this.endDate.setText(str);
     }
 
+    public void setRemindTime(String str){ this.remindTime.setText(str);}
+
     public void saveTask(){
         ToDoTask newTask = new ToDoTask();
         newTask.setId(TaskScheduler.db.getNewId());
@@ -83,12 +116,29 @@ public class NewTaskCreate extends Activity {
         newTask.setTaskMemo((memoEdit.getText().toString()));
         newTask.setStartDate(StringToDate(startDate.getText().toString()));
         newTask.setEndDate(StringToDate(endDate.getText().toString()));
+        newTask.setbIsChecked(isRemind.isChecked());
+        newTask.setRemindTime(StringToTime(remindTime.getText().toString()));
 
         if( newTask.checkAll() == false){
             return;
         }
 
         TaskScheduler.db.save(newTask);
+    }
+
+    private Date StringToTime(String strTime){
+        Date date = null;
+        if( strTime.length() == 5 ){
+            date = new Date();
+
+            String hour = strTime.substring(0,2);
+            date.setTime(Integer.parseInt(hour));
+
+            String minute = strTime.substring(3, 5);
+            date.setMinutes(Integer.parseInt(minute));
+        }
+
+        return date;
     }
 
     private Date StringToDate(String strDate){

@@ -3,6 +3,7 @@ package com.example.youyou.taskscheduler;
 import android.graphics.Bitmap;
 import android.media.Image;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,6 +29,8 @@ public class ToDoTask extends RealmObject {
     public Date endDate;                  // タスクの終了日付
     public String taskName;               // タスク名
     public Boolean bIsChecked = false;  // タスク終了チェック
+    public Boolean bIsRemind = false;   // リマインド設定
+    public Date remindTime;             // リマインドをする時間
 
     public String taskMemo; // 説明用のメモ
 
@@ -53,6 +56,12 @@ public class ToDoTask extends RealmObject {
 
     public String getTaskMemo(){return this.taskMemo;}
     public void setTaskMemo(String taskMemo){this.taskMemo = taskMemo;}
+
+    public Boolean getbIsRemind(){return this.bIsRemind;}
+    public void setbIsRemind(Boolean bIsRemind){this.bIsRemind = bIsRemind;}
+
+    public Date getRemindTime(){return this.remindTime;}
+    public void setRemindTime(Date date){this.remindTime = date;}
 
 
     Boolean checkAll(){

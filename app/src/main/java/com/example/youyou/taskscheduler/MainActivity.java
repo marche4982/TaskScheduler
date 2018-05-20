@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
@@ -33,13 +35,13 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(CalendarList.getNowCalendarIndex());
 
-
         newTaskButton = (Button)findViewById(R.id.newTaskButton);
         newTaskButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if( event.getAction() == MotionEvent.ACTION_DOWN ){
                     Intent intent = new Intent(activity, NewTaskCreate.class);
+                    intent.putExtra("date", new Date().getTime());
                     activity.startActivity(intent);
                 }
                 return false;

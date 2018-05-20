@@ -67,8 +67,17 @@ public class DBOperate {
         realm.commitTransaction();
     }
 
-    public int getNewId(){
-        return realm.where(ToDoTask.class).findAllSorted("id", Sort.DESCENDING).first().getId() + 1;
+    public int getNewId() {
+
+        int newid = 0;
+        ToDoTask task = null;
+
+        if (realm.where(ToDoTask.class).count() > 0) {
+            task = realm.where(ToDoTask.class).findAllSorted("id", Sort.DESCENDING).first();
+            newid = task.getId() + 1;
+        }
+
+        return newid;
     }
 
     /*

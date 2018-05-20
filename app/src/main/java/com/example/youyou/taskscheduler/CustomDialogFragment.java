@@ -29,6 +29,7 @@ public class CustomDialogFragment extends DialogFragment {
 
                         if( getTag() == "startDate") {
                             activity.setStartDate(dateStr);
+                            activity.setEndDate(dateStr);   // 終了日も同時に設定
                         }
                         else if( getTag() == "endDate"){
                             activity.setEndDate(dateStr);
