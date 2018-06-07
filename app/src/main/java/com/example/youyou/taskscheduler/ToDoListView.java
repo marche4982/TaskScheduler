@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.Date;
 
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 import static com.example.youyou.taskscheduler.TaskScheduler.db;
@@ -23,7 +24,7 @@ public class ToDoListView extends Activity {
 
     private Date mDate;
     private ListView listTask;
-    private RealmResults<ToDoTask> task;
+    private RealmList<ToDoTask> task;
     private Button newTaskButton;
     private Activity activity;
 
@@ -53,9 +54,8 @@ public class ToDoListView extends Activity {
             }
         });
 
-
         db.getAll();
-        task = db.getTaskwithDate(this.mDate);
+        task = db.getTask(this.mDate);
 
         TaskListAdapter adapter = new TaskListAdapter(getApplicationContext(), 0, task);
 

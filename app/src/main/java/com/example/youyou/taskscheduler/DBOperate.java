@@ -6,6 +6,7 @@ import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -85,8 +86,32 @@ public class DBOperate {
     *
     *   @param date 取得する日付
     */
-    public RealmResults<ToDoTask> getTaskwithDate(Date date){
-        return realm.where(ToDoTask.class).lessThanOrEqualTo("startDate", date).greaterThanOrEqualTo("endDate", date).findAll();
+    public RealmList<ToDoTask> getTaskwithDate(Date date){
+
+        RealmList<ToDoTask> list = new RealmList<ToDoTask>();
+        list.addAll( realm.where(ToDoTask.class).lessThanOrEqualTo("startDate", date).greaterThanOrEqualTo("endDate", date).findAll());
+        return list;
+    }
+
+    public RealmList<ToDoTask> getTaskwithDayOfWeek(int DayOfWeek){
+        RealmList<ToDoTask> list = new RealmList<ToDoTask>();
+        list.addAll(realm.where(ToDoTask.class).findAll());
+        for(int i = 0; i < list.size(); i++){
+            if( (list.get(i).getnRegularDay() & (0x01 << DayOfWeek)) == 0 ){
+                // 今日の曜日にbitが立っていないなら, 結果から省く
+                list.remove(i);
+            }
+        }
+
+        return list;
+    }
+
+    public RealmList<ToDoTask> getTask(Date date){
+        RealmList<ToDoTask> list = new RealmList<ToDoTask>();
+        list.addAll(getTaskwithDate(date));
+        list.addAll(getTaskwithDayOfWeek(date.getDate()));
+
+        return list;
     }
 
 }

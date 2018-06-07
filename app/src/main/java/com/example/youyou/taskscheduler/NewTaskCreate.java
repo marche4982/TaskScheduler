@@ -22,14 +22,18 @@ import java.util.Date;
 public class NewTaskCreate extends Activity {
 
     private Button OkButton;
+    private Button ReturnButton;
     private EditText taskNameEdit;
     private EditText memoEdit;
     private TextView startDate;
     private TextView endDate;
     private TextView remindTime;
+    private TextView daySelect;
     private CheckBox isRemind;
     private Activity activity;
     private Date defDate;
+
+    private int nRegularDay;   // 定期タスク設定
 
     @Override
     protected void onCreate(Bundle bundle){
@@ -47,6 +51,17 @@ public class NewTaskCreate extends Activity {
             public boolean onTouch(View v, MotionEvent event) {
                 if( event.getAction() == MotionEvent.ACTION_DOWN ){
                     saveTask();
+                    finish();
+                }
+                return false;
+            }
+        });
+
+        ReturnButton = (Button)findViewById(R.id.return_button);
+        ReturnButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if( event.getAction() == MotionEvent.ACTION_DOWN ){
                     finish();
                 }
                 return false;
@@ -78,8 +93,17 @@ public class NewTaskCreate extends Activity {
             }
         });
         endDate.setText(setDate(defDate));
-
         endDate = (TextView)findViewById(R.id.textview_endDate);
+
+        daySelect = (TextView)findViewById(R.id.textview_daySelect);
+        daySelect.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                DaySelectDialog dialog = new DaySelectDialog();
+                dialog.show(getFragmentManager(), "曜日選択");
+            }
+        });
+
 
         isRemind = (CheckBox)findViewById(R.id.remindCheckBox);
 
@@ -95,8 +119,43 @@ public class NewTaskCreate extends Activity {
     }
 
     public String setDate(Date date){
-        String str = String.format("%04d%02d%02d", date.getYear()+1900, date.getMonth(), date.getDate());
+        String str = String.format("%04d%02d%02d", date.getYear()+1900, date.getMonth()+1, date.getDate());
         return str;
+    }
+
+    public void setDayofWeek(int dayofWeek){
+        nRegularDay = dayofWeek;
+        String StrDaySelect = "";
+        for(Integer i = 0; i < 7; i++){
+             int check = (dayofWeek >> i) & 0x01 ;
+             if( check == 1) {
+                 switch (i) {
+                     case 0:
+                         StrDaySelect += "日";
+                         break;
+                     case 1:
+                         StrDaySelect += "月";
+                         break;
+                     case 2:
+                         StrDaySelect += "火";
+                         break;
+                     case 3:
+                         StrDaySelect += "水";
+                         break;
+                     case 4:
+                         StrDaySelect += "木";
+                         break;
+                     case 5:
+                         StrDaySelect += "金";
+                         break;
+                     case 6:
+                         StrDaySelect += "土";
+                         break;
+                 }
+             }
+        }
+
+        daySelect.setText(StrDaySelect);
     }
 
     public void setStartDate(String str){
@@ -118,6 +177,7 @@ public class NewTaskCreate extends Activity {
         newTask.setEndDate(StringToDate(endDate.getText().toString()));
         newTask.setbIsChecked(isRemind.isChecked());
         newTask.setRemindTime(StringToTime(remindTime.getText().toString()));
+        newTask.setnRegularDay(nRegularDay);
 
         if( newTask.checkAll() == false){
             return;

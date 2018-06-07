@@ -31,6 +31,8 @@ public class ToDoTask extends RealmObject {
     public Boolean bIsChecked = false;  // タスク終了チェック
     public Boolean bIsRemind = false;   // リマインド設定
     public Date remindTime;             // リマインドをする時間
+    public int nRegularDay;         // 定期的な設定.各bitがOnなら設定あり、Offなら設定なし。1bit目が日曜日で7bit目が土曜
+
 
     public String taskMemo; // 説明用のメモ
 
@@ -63,6 +65,20 @@ public class ToDoTask extends RealmObject {
     public Date getRemindTime(){return this.remindTime;}
     public void setRemindTime(Date date){this.remindTime = date;}
 
+    public int getnRegularDay(){return this.nRegularDay;}
+    public void setnRegularDay(int regularDay){ this.nRegularDay = regularDay;}
+
+    public Boolean getConvertedRegularDay(int regular){
+
+        Boolean ret = true;
+        if( (this.nRegularDay & (0x01 << regular)) == 1) {
+            ret = true;
+        }else{
+            ret = false;
+         }
+
+         return ret;
+    }
 
     Boolean checkAll(){
         Boolean ret = true;

@@ -40,10 +40,6 @@ public class ChooseDate extends AppCompatActivity {
 
     /* 取得した日付を入れる */
 
-
-    // 日付の設定の仕方を変えないとダメか。
-    // スロット式にするとか。
-
     @Override
     protected void onDestroy(){
 
