@@ -3,6 +3,7 @@ package com.example.youyou.taskscheduler;
 import android.content.Context;
 
 import java.util.Date;
+import java.util.Iterator;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -96,10 +97,12 @@ public class DBOperate {
     public RealmList<ToDoTask> getTaskwithDayOfWeek(int DayOfWeek){
         RealmList<ToDoTask> list = new RealmList<ToDoTask>();
         list.addAll(realm.where(ToDoTask.class).findAll());
-        for(int i = 0; i < list.size(); i++){
-            if( (list.get(i).getnRegularDay() & (0x01 << DayOfWeek)) == 0 ){
+        Iterator<ToDoTask> iterator = list.iterator();
+        while(iterator.hasNext()){
+            int nRegularyDay = iterator.next().getnRegularDay();
+            if( (nRegularyDay & (0x01 << DayOfWeek)) == 0 ){
                 // 今日の曜日にbitが立っていないなら, 結果から省く
-                list.remove(i);
+                iterator.remove();
             }
         }
 
@@ -109,7 +112,7 @@ public class DBOperate {
     public RealmList<ToDoTask> getTask(Date date){
         RealmList<ToDoTask> list = new RealmList<ToDoTask>();
         list.addAll(getTaskwithDate(date));
-        list.addAll(getTaskwithDayOfWeek(date.getDate()));
+        list.addAll(getTaskwithDayOfWeek(date.getDay()));
 
         return list;
     }
