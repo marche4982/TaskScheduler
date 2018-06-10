@@ -16,15 +16,21 @@
 
     <LinearLayout
         android:id="@+id/calendar_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_gravity="right">
 
-        <Button
+        <ImageButton
             android:id="@+id/newTaskButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@android:style/Widget.Holo.ImageButton"
+            android:layout_width="30pt"
+            android:layout_height="30pt"
             android:layout_weight="1"
-            android:text="New Task" />
+            android:background="@android:drawable/ic_menu_add"
+            android:elevation="24dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
     </LinearLayout>
 </LinearLayout>

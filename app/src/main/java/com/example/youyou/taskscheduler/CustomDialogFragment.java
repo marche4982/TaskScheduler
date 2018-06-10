@@ -40,8 +40,6 @@ public class CustomDialogFragment extends DialogFragment {
                 calendar.get(Calendar.MONTH), // 初期選択月
                 calendar.get(Calendar.DAY_OF_MONTH) // 初期選択日
         );
-
-
         return dateBuilder;
     }
 }

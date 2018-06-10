@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.Layout;
 import android.view.Display;
 import android.view.Gravity;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,6 +34,9 @@ public class CalendarView extends android.support.v4.app.Fragment {
     private Date now;
     private LinearLayout ParentLayout;    // カレンダーの最上位のLinearLayout
 
+    private ImageButton leftButton;
+    private ImageButton rightButton;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +52,34 @@ public class CalendarView extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.calendar_main, null);
         ParentLayout = (LinearLayout)view.findViewById(R.id.calendar_parent);
+
+        leftButton = view.findViewById(R.id.left_button);
+        leftButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if( event.getAction() == MotionEvent.ACTION_DOWN ) {
+                    int nCurrent = MainActivity.viewPager.getCurrentItem();
+                    MainActivity.viewPager.setCurrentItem(nCurrent  - 1, true);
+                }
+
+                return false;
+            }
+        });
+
+        rightButton = view.findViewById(R.id.right_button);
+        rightButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if( event.getAction() == MotionEvent.ACTION_DOWN ) {
+                    int nCurrent = MainActivity.viewPager.getCurrentItem();
+                    MainActivity.viewPager.setCurrentItem(nCurrent + 1, true);
+                }
+
+                return false;
+            }
+        });
 
         setCalendarTitle(now);
         setDayofWeek();

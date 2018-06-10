@@ -3,13 +3,18 @@ package com.example.youyou.taskscheduler;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.sql.Time;
@@ -23,6 +28,13 @@ public class NewTaskCreate extends Activity {
 
     private Button OkButton;
     private Button ReturnButton;
+
+    private ImageButton saveButton;
+    private ImageButton returnButton;
+
+    private RadioButton radioButton_InputDate;
+    private RadioButton radioButton_InputDayofWeek;
+
     private EditText taskNameEdit;
     private EditText memoEdit;
     private TextView startDate;
@@ -45,8 +57,8 @@ public class NewTaskCreate extends Activity {
         defDate = new Date();
         defDate.setTime(intent.getLongExtra("date", 0));
 
-        OkButton = (Button)findViewById(R.id.ok_button);
-        OkButton.setOnTouchListener(new View.OnTouchListener() {
+        saveButton = (ImageButton)findViewById(R.id.save_button);
+        saveButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if( event.getAction() == MotionEvent.ACTION_DOWN ){
@@ -57,8 +69,8 @@ public class NewTaskCreate extends Activity {
             }
         });
 
-        ReturnButton = (Button)findViewById(R.id.return_button);
-        ReturnButton.setOnTouchListener(new View.OnTouchListener() {
+        returnButton = (ImageButton)findViewById(R.id.return_button);
+        returnButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if( event.getAction() == MotionEvent.ACTION_DOWN ){
@@ -71,10 +83,12 @@ public class NewTaskCreate extends Activity {
         taskNameEdit = (EditText)findViewById(R.id.edit_taskname);
         taskNameEdit.setFocusable(true);                // フォーカスを有効に
         taskNameEdit.setFocusableInTouchMode(true);     // タッチでのフォーカス有効
+        SetClearTextOnTouch(taskNameEdit);
 
         memoEdit = (EditText)findViewById(R.id.edit_memo);
+        SetClearTextOnTouch(memoEdit);
 
-        startDate = (TextView)findViewById(R.id.textview_startdate);
+        startDate = (TextView)findViewById(R.id.textview_startDate);
         startDate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -104,18 +118,61 @@ public class NewTaskCreate extends Activity {
             }
         });
 
+        radioButton_InputDate = (RadioButton)findViewById(R.id.radioButton_newtask_inputdate);
+        radioButton_InputDayofWeek = (RadioButton)findViewById(R.id.radioButton_newtask_inputdayofweek);
+        SetDefaultRadioBtnState();
+    }
 
-        isRemind = (CheckBox)findViewById(R.id.remindCheckBox);
+    private void SetDefaultRadioBtnState(){
+        SetRadioButtonState(radioButton_InputDate, true);
+        SetRadioButtonState(radioButton_InputDayofWeek, false);
+    }
 
-        remindTime = (TextView)findViewById(R.id.remindTime);
-        remindTime.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    TimeDialogFragment dialog = new TimeDialogFragment();
-                    dialog.show(getFragmentManager(), "remindTime");
+    private void SetRadioButtonState(RadioButton radioButton, boolean checked){
+        radioButton.setChecked(checked);
+        radioButton.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    // ボタンONOFFにあわせて、
+                    int nViewId = buttonView.getId();
+                    if (nViewId == R.id.radioButton_newtask_inputdate){
+                        View view = (View)findViewById(R.id.layout_newtask_inputMethod_date);
+                        if( isChecked == true ){    // 選択状態なら表示
+                            view.setVisibility(View.VISIBLE);
+                        }
+                        else{   // 非選択状態なら非表示
+                            view.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                    else if( nViewId == R.id.radioButton_newtask_inputdayofweek){
+                        View view = (View)findViewById(R.id.layout_newtask_inputMethod_dayofweek);
+                        if( isChecked == true ){    // 選択状態なら表示
+                            view.setVisibility(View.VISIBLE);
+                        }
+                        else{   // 非選択状態なら非表示
+                            view.setVisibility(View.INVISIBLE);
+                        }
+                    }
                 }
-          }
-        );
+            });
+        return  ;
+    }
+
+    public void SetClearTextOnTouch(EditText editText) {
+        editText.setOnTouchListener(new EditText.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                if( event.getAction() == MotionEvent.ACTION_DOWN ){
+                    int nColor = ((TextView)v).getCurrentTextColor();
+                    if( nColor == getResources().getColor(R.color.color_editText_unInput) ){
+                        // 未入力色なら、テキストをクリアして色を変える
+                        ((TextView)v).setText("");
+                        ((TextView)v).setTextColor(getResources().getColor(R.color.color_editText_Input));
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     public String setDate(Date date){
@@ -175,8 +232,6 @@ public class NewTaskCreate extends Activity {
         newTask.setTaskMemo((memoEdit.getText().toString()));
         newTask.setStartDate(StringToDate(startDate.getText().toString()));
         newTask.setEndDate(StringToDate(endDate.getText().toString()));
-        newTask.setbIsChecked(isRemind.isChecked());
-        newTask.setRemindTime(StringToTime(remindTime.getText().toString()));
         newTask.setnRegularDay(nRegularDay);
 
         if( newTask.checkAll() == false){

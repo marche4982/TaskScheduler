@@ -12,15 +12,17 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ViewPager viewPager;
-    private Button newTaskButton;
+    public static ViewPager viewPager;
+    private ImageButton newTaskButton;
     private Activity activity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(CalendarList.getNowCalendarIndex());
 
-        newTaskButton = (Button)findViewById(R.id.newTaskButton);
+        newTaskButton = (ImageButton)findViewById(R.id.newTaskButton);
         newTaskButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

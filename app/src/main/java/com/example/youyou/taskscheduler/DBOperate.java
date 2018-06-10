@@ -89,8 +89,14 @@ public class DBOperate {
     */
     public RealmList<ToDoTask> getTaskwithDate(Date date){
 
+        Date dateFrom = (Date)date.clone(); // 検索開始期間
+        Date dateEnd = (Date)date.clone();  // 検索終了期間 23:59:59
+        dateEnd.setHours(23);
+        dateEnd.setMinutes((59));
+        dateEnd.setSeconds(59);
+
         RealmList<ToDoTask> list = new RealmList<ToDoTask>();
-        list.addAll( realm.where(ToDoTask.class).lessThanOrEqualTo("startDate", date).greaterThanOrEqualTo("endDate", date).findAll());
+        list.addAll( realm.where(ToDoTask.class).greaterThanOrEqualTo("startDate", dateFrom).lessThanOrEqualTo("endDate", dateEnd).findAll());
         return list;
     }
 

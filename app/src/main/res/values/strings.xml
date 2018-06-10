@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">TaskScheduler</string>
     <string name="bundle_time">time</string>
+    <string name="newtask_name_title">タイトル</string>
+    <string name="newtask_value_defaulttitle">タイトル</string>
+    <string name="newtask_value_dateKara">～</string>
+    <string name="newtask_value_defaultmemo">メモ</string>
+    <string name="newtask_name_radio_inputdate">期間で選択</string>
+    <string name="newtask_name_radio_inputdayofweek">曜日で選択</string>
 </resources>

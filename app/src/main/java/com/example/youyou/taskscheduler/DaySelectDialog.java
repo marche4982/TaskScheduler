@@ -47,7 +47,6 @@ public class DaySelectDialog extends DialogFragment {
                 .setNegativeButton("Cancel", null)
                 ;
 
-
          return builder.create();
     }
 }
