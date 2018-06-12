@@ -12,4 +12,5 @@
     <integer name="saturday">6</integer>
     <integer name="maxCalendar">1000</integer>
     <integer name="firstPosition">1</integer>
+    <integer name="textsize_taskname">12</integer>
 </resources>

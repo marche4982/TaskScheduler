@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -83,10 +85,10 @@ public class NewTaskCreate extends Activity {
         taskNameEdit = (EditText)findViewById(R.id.edit_taskname);
         taskNameEdit.setFocusable(true);                // フォーカスを有効に
         taskNameEdit.setFocusableInTouchMode(true);     // タッチでのフォーカス有効
-        SetClearTextOnTouch(taskNameEdit);
+        SetClearTextOnTouch(taskNameEdit, getResources().getString(R.string.newtask_value_defaulttitle));
 
         memoEdit = (EditText)findViewById(R.id.edit_memo);
-        SetClearTextOnTouch(memoEdit);
+        SetClearTextOnTouch(memoEdit, getResources().getString(R.string.newtask_value_defaultmemo));
 
         startDate = (TextView)findViewById(R.id.textview_startDate);
         startDate.setOnClickListener(new View.OnClickListener(){
@@ -158,7 +160,7 @@ public class NewTaskCreate extends Activity {
         return  ;
     }
 
-    public void SetClearTextOnTouch(EditText editText) {
+    public void SetClearTextOnTouch(final EditText editText, final String defaultString) {
         editText.setOnTouchListener(new EditText.OnTouchListener(){
             @Override
             public boolean onTouch(View v, MotionEvent event){
@@ -173,6 +175,29 @@ public class NewTaskCreate extends Activity {
                 return false;
             }
         });
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // 文字の入力前に色を変える
+                if( s.length() == 0 ){
+                    editText.setTextColor(getResources().getColor(R.color.color_editText_Input));
+                }
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                int nColor = editText.getCurrentTextColor();
+                if( s.length() == 0 && nColor == getResources().getColor(R.color.color_editText_Input)){
+                    // 入力状態から、変わったとき
+                    s.append(defaultString);
+                    editText.setTextColor(getResources().getColor(R.color.color_editText_unInput));
+                }
+            }
+        });
+
     }
 
     public String setDate(Date date){
@@ -227,9 +252,21 @@ public class NewTaskCreate extends Activity {
 
     public void saveTask(){
         ToDoTask newTask = new ToDoTask();
-        newTask.setId(TaskScheduler.db.getNewId());
-        newTask.setTaskName(taskNameEdit.getText().toString());
-        newTask.setTaskMemo((memoEdit.getText().toString()));
+        newTask.setId(TaskScheduler.db.getNewId()); // ID
+
+        // タイトルは空だとしても必ず入れる
+        newTask.setTaskName(taskNameEdit.getText().toString());    // EditText 自体にデフォルトテキストを持たせたいなあ
+
+        String memo = new String();
+        if( memoEdit.getCurrentTextColor() != getResources().getColor(R.color.color_editText_Input )) {
+            // 未入力ならセットしない
+            memo = memoEdit.getText().toString();
+        }
+        else{
+            memo = "";
+        }
+        newTask.setTaskMemo(memo);
+
         newTask.setStartDate(StringToDate(startDate.getText().toString()));
         newTask.setEndDate(StringToDate(endDate.getText().toString()));
         newTask.setnRegularDay(nRegularDay);
