@@ -25,15 +25,14 @@ public class ToDoTask extends RealmObject {
     public int id;
 
     @Required
-    public Date startDate;                // タスクの開始日付
-    public Date endDate;                  // タスクの終了日付
     public String taskName;               // タスク名
     public Boolean bIsChecked = false;  // タスク終了チェック
     public Boolean bIsRemind = false;   // リマインド設定
     public Date remindTime;             // リマインドをする時間
     public int nRegularDay;         // 定期的な設定.各bitがOnなら設定あり、Offなら設定なし。1bit目が日曜日で7bit目が土曜
 
-
+    public Date startDate;                // タスクの開始日付
+    public Date endDate;                  // タスクの終了日付
     public String taskMemo; // 説明用のメモ
 
     // getter setter
@@ -85,8 +84,8 @@ public class ToDoTask extends RealmObject {
 
         ret |= checkTaskMemo();
         ret |= checkTaskName();
-        ret |= checkStartDate();
-        ret |= checkEndDate();
+        //ret |= checkStartDate();  // 期間のnullチェックはしない
+        //ret |= checkEndDate();
         ret |= checkBIsChecked();
 
         return ret;
@@ -130,6 +129,8 @@ public class ToDoTask extends RealmObject {
             return false;
         }
 
+        /*
+        日時は null チェックのみ
         if( date.toString().length() != 8){
             ret = false;
         }
@@ -140,6 +141,7 @@ public class ToDoTask extends RealmObject {
                 ret = false;
             }
         }
+        */
 
         return ret;
     }

@@ -63,22 +63,19 @@ public class DBOperate {
     *
     *   @param task 削除するタスク
     */
-    public void delete(ToDoTask task){
+    public void delete(final ToDoTask task){
         realm.beginTransaction();
-        search(task.getId()).deleteFromRealm();
+        search(task.getId()).deleteFromRealm();;
         realm.commitTransaction();
     }
 
     public int getNewId() {
-
         int newid = 0;
         ToDoTask task = null;
-
         if (realm.where(ToDoTask.class).count() > 0) {
             task = realm.where(ToDoTask.class).findAllSorted("id", Sort.DESCENDING).first();
             newid = task.getId() + 1;
         }
-
         return newid;
     }
 

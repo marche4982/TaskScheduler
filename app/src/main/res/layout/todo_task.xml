@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
     <LinearLayout
         android:id="@+id/layout_todotask_column1"
@@ -21,15 +21,21 @@
             android:layout_weight="1"
             android:textSize="12pt"
             android:text="TextView" />
+        <Button
+            android:id="@+id/button_todotask_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="8pt"
+            android:text="Delete" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_todotask_column2"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:visibility="invisible">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/textview_todotask_period"
@@ -42,8 +48,7 @@
             android:id="@+id/textview_todotask_memo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12pt"
-            android:text="memo">
+            android:textSize="12pt">
         </TextView>
     </LinearLayout>
 </LinearLayout>

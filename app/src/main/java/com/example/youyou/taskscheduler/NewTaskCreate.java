@@ -141,9 +141,13 @@ public class NewTaskCreate extends Activity {
                         View view = (View)findViewById(R.id.layout_newtask_inputMethod_date);
                         if( isChecked == true ){    // 選択状態なら表示
                             view.setVisibility(View.VISIBLE);
+                            startDate.setText(setDate(defDate));    // デフォ日時をセット
+                            endDate.setText(setDate(defDate));
                         }
                         else{   // 非選択状態なら非表示
                             view.setVisibility(View.INVISIBLE);
+                            startDate.setText("");                  // 日時はクリア
+                            endDate.setText("");
                         }
                     }
                     else if( nViewId == R.id.radioButton_newtask_inputdayofweek){
@@ -169,7 +173,6 @@ public class NewTaskCreate extends Activity {
                     if( nColor == getResources().getColor(R.color.color_editText_unInput) ){
                         // 未入力色なら、テキストをクリアして色を変える
                         ((TextView)v).setText("");
-                        ((TextView)v).setTextColor(getResources().getColor(R.color.color_editText_Input));
                     }
                 }
                 return false;
@@ -177,10 +180,19 @@ public class NewTaskCreate extends Activity {
         });
 
         editText.addTextChangedListener(new TextWatcher() {
+            Boolean bBeforeUnInput = false; // 文字列の変更前は未入力状態
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if( editText.getCurrentTextColor() == getResources().getColor(R.color.color_editText_unInput) ){
+                    // 未入力色か
+                    bBeforeUnInput = true;
+                }
+                else{
+                    bBeforeUnInput = false;
+                }
+
                 // 文字の入力前に色を変える
-                if( s.length() == 0 ){
+                if( start == 0 && count > 0 ){
                     editText.setTextColor(getResources().getColor(R.color.color_editText_Input));
                 }
             }
@@ -190,10 +202,15 @@ public class NewTaskCreate extends Activity {
             @Override
             public void afterTextChanged(Editable s) {
                 int nColor = editText.getCurrentTextColor();
-                if( s.length() == 0 && nColor == getResources().getColor(R.color.color_editText_Input)){
-                    // 入力状態から、変わったとき
+                if( s.length() == 0 && bBeforeUnInput == false){
+                    // 入力済みから0になったときは、未入力へ
                     s.append(defaultString);
                     editText.setTextColor(getResources().getColor(R.color.color_editText_unInput));
+                    editText.setSelection(0);
+                }
+                else if( s.length() > 0 && bBeforeUnInput == true ){
+                    // 未入力状態から入力されたら、デフォルト文字を解除
+                    s.delete(1, s.length());
                 }
             }
         });
@@ -258,7 +275,7 @@ public class NewTaskCreate extends Activity {
         newTask.setTaskName(taskNameEdit.getText().toString());    // EditText 自体にデフォルトテキストを持たせたいなあ
 
         String memo = new String();
-        if( memoEdit.getCurrentTextColor() != getResources().getColor(R.color.color_editText_Input )) {
+        if( memoEdit.getCurrentTextColor() == getResources().getColor(R.color.color_editText_Input )) {
             // 未入力ならセットしない
             memo = memoEdit.getText().toString();
         }
@@ -267,8 +284,20 @@ public class NewTaskCreate extends Activity {
         }
         newTask.setTaskMemo(memo);
 
-        newTask.setStartDate(StringToDate(startDate.getText().toString()));
-        newTask.setEndDate(StringToDate(endDate.getText().toString()));
+        if( startDate.length() > 0 ) {
+            newTask.setStartDate(StringToDate(startDate.getText().toString()));
+        }
+        else{
+            newTask.setStartDate(null);
+        }
+
+        if( startDate.length() > 0 ) {
+            newTask.setEndDate(StringToDate(endDate.getText().toString()));
+        }
+        else{
+            newTask.setEndDate(null);
+        }
+
         newTask.setnRegularDay(nRegularDay);
 
         if( newTask.checkAll() == false){

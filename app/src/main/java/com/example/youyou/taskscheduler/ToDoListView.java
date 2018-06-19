@@ -25,8 +25,9 @@ public class ToDoListView extends Activity {
     private Date mDate;
     private ListView listTask;
     private RealmList<ToDoTask> task;
-    private Button newTaskButton;
     private Activity activity;
+
+    private TextView text_listTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -34,25 +35,14 @@ public class ToDoListView extends Activity {
         setContentView(R.layout.todo_list);
 
         activity = this;
-
         Intent intent = getIntent();
         Long time = intent.getLongExtra(getResources().getString(R.string.bundle_time), 0);
 
         this.mDate = new Date();
         this.mDate.setTime(time);
 
-        newTaskButton = (Button)findViewById(R.id.newTaskButton);
-        newTaskButton.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if( event.getAction() == MotionEvent.ACTION_DOWN ){
-                    Intent intent = new Intent(activity, NewTaskCreate.class);
-                    intent.putExtra("date", mDate.getTime());
-                    activity.startActivity(intent);
-                }
-                return false;
-            }
-        });
+        text_listTitle = (TextView)findViewById(R.id.list_title);
+        text_listTitle.setText(String.format("%04d年%02d月%02d日", this.mDate.getYear()+1900, this.mDate.getMonth()+1, this.mDate.getDate()));
 
         db.getAll();
         task = db.getTask(this.mDate);

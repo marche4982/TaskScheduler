@@ -13,4 +13,5 @@
     <integer name="maxCalendar">1000</integer>
     <integer name="firstPosition">1</integer>
     <integer name="textsize_taskname">12</integer>
+    <integer name="maxlines_newtask_taskname">1</integer>
 </resources>
