@@ -65,4 +65,7 @@ public class CalendarFragmentPagerAdapter extends FragmentPagerAdapter {
         return touchedDate;
     }
 
+
+
+
 }

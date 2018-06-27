@@ -5,6 +5,7 @@
     android:id="@+id/layout_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_main_background"
     android:orientation="vertical">
 
     <LinearLayout
@@ -19,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="?android:attr/colorForegroundInverse"
+            android:background="@color/color_main_background"
             android:src="@android:drawable/ic_menu_revert" />
 
     </LinearLayout>

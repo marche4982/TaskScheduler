@@ -1,6 +1,8 @@
 package com.example.youyou.taskscheduler;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -10,6 +12,7 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import java.util.Date;
 
@@ -37,7 +40,7 @@ public class DateTextView extends android.support.v7.widget.AppCompatTextView{
         this.setGravity(Gravity.CENTER);    // 中央に表示
         this.setTextSize(15);                // 文字サイズ：20
         this.setWidth(mViewWidth);           // 7等分
-        this.setHeight(200);
+        this.setHeight(150);
         this.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -60,10 +63,15 @@ public class DateTextView extends android.support.v7.widget.AppCompatTextView{
                 // 親がChooseDateの場合は、finishしなきゃいけないのか
                 if( event.getAction() == MotionEvent.ACTION_UP ){
                     if( mDate != null ) {
+                        ((MainActivity)activity).AddTaskList(mDate);
+
+
+                        /*
                         Intent intent = new Intent(activity, ToDoListView.class);
                         Bundle bundle = new Bundle();
                         intent.putExtra(getResources().getString(R.string.bundle_time), mDate.getTime());
                         activity.startActivity(intent);
+                        */
                     }
                 }
                 return true;

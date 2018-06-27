@@ -7,4 +7,6 @@
     <string name="newtask_value_defaultmemo">メモ</string>
     <string name="newtask_name_radio_inputdate">期間で選択</string>
     <string name="newtask_name_radio_inputdayofweek">曜日で選択</string>
+    <string name="bundle_tag_task">task</string>
+    <string name="fragment_backstack">fragment_backstack</string>
 </resources>
