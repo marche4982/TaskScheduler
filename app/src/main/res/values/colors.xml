@@ -5,5 +5,5 @@
     <color name="colorAccent">#efdcaa</color>
     <color name="color_editText_unInput">#efdcaa</color>
     <color name="color_editText_Input">#000000</color>
-    <color name="color_main_background">#F2F2F2</color>
+    <color name="color_main_background">#E0E0E0</color>
 </resources>

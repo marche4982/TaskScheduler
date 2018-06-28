@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/color_main_background"
     tools:context="com.example.youyou.taskscheduler.MainActivity"
     android:id="@+id/main_memo">
 
@@ -20,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@color/color_main_background"
             android:textSize="12pt"
             android:text="TextView" />
         <Button
@@ -36,8 +36,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/mainmemo_taskmemo"

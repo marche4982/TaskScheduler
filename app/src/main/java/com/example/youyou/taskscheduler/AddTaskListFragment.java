@@ -43,28 +43,13 @@ public class AddTaskListFragment extends android.support.v4.app.Fragment {
         txtviewTaskMemo.setText(task.taskMemo);
 
         layout_column2 = (LinearLayout)view.findViewById(R.id.layout_mainmemo_columne2);
-        SetLayoutOnTouch(view);
 
         return view;
     }
 
-    private void SetLayoutOnTouch(View view){
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if( event.getAction() == MotionEvent.ACTION_DOWN ){
-                    // layout_column1がタッチされたら
-                    layout_column2 = ((LinearLayout)v.findViewById(R.id.layout_mainmemo_columne2));
-                    if( layout_column2.getVisibility() == GONE){
-                        layout_column2.setVisibility(View.VISIBLE);
-                    }
-                    else{
-                        layout_column2.setVisibility(GONE);
-                    }
-                }
-                return false;
-            }
-        });
-    }
+    // メモの修正できるようにする
+    // メモのデザインを変える
+    // メモが一つしか登録できてない？
+    // メモスクロールしたら
 
 }
