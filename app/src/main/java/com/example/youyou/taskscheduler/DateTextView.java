@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -40,7 +41,10 @@ public class DateTextView extends android.support.v7.widget.AppCompatTextView{
         this.setGravity(Gravity.CENTER);    // 中央に表示
         this.setTextSize(15);                // 文字サイズ：20
         this.setWidth(mViewWidth);           // 7等分
-        this.setHeight(150);
+        this.setBackgroundDrawable(getResources().getDrawable(R.drawable.frame_datetextview));
+        this.setGravity(Gravity.TOP | Gravity.LEFT);
+        this.setHeight(125);
+
         this.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

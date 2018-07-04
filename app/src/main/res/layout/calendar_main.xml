@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/calendar_parent"
@@ -9,26 +10,27 @@
     android:background="@color/color_main_background"
     tools:context="com.example.youyou.taskscheduler.MainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="30pt"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="10dp">
 
         <ImageButton
             android:id="@+id/left_button"
             android:layout_width="30pt"
             android:layout_height="match_parent"
-            android:backgroundTint="@android:color/background_light"
+            android:layout_alignParentLeft="true"
+            android:background="@null"
             android:scaleType="fitStart"
-            android:rotation="180"
-            android:layout_marginLeft="60dp"
-            app:srcCompat="@android:drawable/ic_menu_send" />
+            app:srcCompat="?attr/actionModeCloseDrawable" />
 
-        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        <TextView
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/calendar_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
             android:gravity="center_vertical|center_horizontal"
             android:textAlignment="gravity"
             android:text="2018"
@@ -39,12 +41,13 @@
             android:layout_width="30pt"
             android:layout_height="match_parent"
             android:adjustViewBounds="false"
-            android:backgroundTint="@android:color/background_light"
+            android:rotation="180"
+            android:layout_alignParentRight="true"
+            android:background="@null"
             android:scaleType="fitStart"
-            android:layout_marginRight="60dp"
-            app:srcCompat="@android:drawable/ic_menu_send" />
+            app:srcCompat="?attr/actionModeCloseDrawable" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <LinearLayout

@@ -6,4 +6,5 @@
     <color name="color_editText_unInput">#efdcaa</color>
     <color name="color_editText_Input">#000000</color>
     <color name="color_main_background">#E0E0E0</color>
+    <color name="color_memo_yellow">#F6ECAE</color>
 </resources>
