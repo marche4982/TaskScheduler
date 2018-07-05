@@ -44,6 +44,24 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(CalendarList.getNowCalendarIndex());
 
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                ((MainActivity)activity).ClearTaskList();
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+
         newTaskButton = (ImageButton)findViewById(R.id.newTaskButton);
         newTaskButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -92,6 +110,13 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(getResources().getString(R.string.fragment_backstack));
 
         transaction.commit();
+    }
+
+    public void ClearTaskList(){
+        if( manager.getBackStackEntryCount() != 0 ){
+            // バックスタックありなら元に戻す
+            manager.popBackStack();
+        }
     }
 
 
