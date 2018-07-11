@@ -129,6 +129,7 @@ public class CalendarView extends android.support.v4.app.Fragment {
             // 曜日を表示
             String[] strDayOfTheWeek = getResources().getStringArray(R.array.day_of_the_week);
             mDateTextView.setText(strDayOfTheWeek[i]);
+            mDateTextView.setHeight(60);
             mWeekTitle.addView(mDateTextView);
         }
 
@@ -153,6 +154,12 @@ public class CalendarView extends android.support.v4.app.Fragment {
 
             // 1週間分のデータを入れる
             if( mWeekDate.size() == WEEKDAYS || i == (monthDate.size() -1) ) {
+
+                // 一週間分のDateを詰める
+                while(mWeekDate.size() != WEEKDAYS ){
+                    mWeekDate.add(null);
+                }
+
                 setWeekDays(mWeekDate);
                 mWeekDate.clear();
             }

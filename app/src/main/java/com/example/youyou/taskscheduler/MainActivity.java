@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -36,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         activity = this;
+
+        // ラジオボタンを変える
+        // 自動テストする
+        // メモを削除編集する機能
+        // 初期標示時に今日のタスクを追加
+        // メモの色を変えられるようにする
+        // カレンダーの真下にメモを来るようにしたい
 
         manager = getSupportFragmentManager();
         viewPager = (ViewPager)findViewById(R.id.calendar_pager);
