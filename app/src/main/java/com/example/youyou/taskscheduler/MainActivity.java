@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import io.realm.RealmList;
@@ -39,9 +40,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         activity = this;
 
-        // ラジオボタンを変える
         // 自動テストする
+
         // メモを削除編集する機能
+            // →　編集削除ボタン付ける　→　idがないんで消せません
+            // →　編集時の文字色とフォーカスカエル
+
         // 初期標示時に今日のタスクを追加
         // メモの色を変えられるようにする
         // カレンダーの真下にメモを来るようにしたい
@@ -83,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
     }
 
 

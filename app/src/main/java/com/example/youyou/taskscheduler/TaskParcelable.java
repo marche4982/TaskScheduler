@@ -42,11 +42,13 @@ public class TaskParcelable implements Parcelable {
     };
 
     private TaskParcelable(Parcel in){
-        taskName = in.readString();
-        taskMemo = in.readString();
-        startDate = in.readLong();
-        endDate = in.readLong();
-        nRegularDay = in.readInt();
+        if( in != null ){
+            taskName = in.readString();
+            taskMemo = in.readString();
+            startDate = in.readLong();
+            endDate = in.readLong();
+            nRegularDay = in.readInt();
+        }
     }
 
 

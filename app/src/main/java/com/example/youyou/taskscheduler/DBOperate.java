@@ -65,7 +65,9 @@ public class DBOperate {
     */
     public void delete(final ToDoTask task){
         realm.beginTransaction();
-        search(task.getId()).deleteFromRealm();;
+        if( task.getId() > 0 ) {
+            search(task.getId()).deleteFromRealm();
+        }
         realm.commitTransaction();
     }
 

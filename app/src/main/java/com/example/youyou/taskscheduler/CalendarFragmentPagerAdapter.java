@@ -24,9 +24,6 @@ public class CalendarFragmentPagerAdapter extends FragmentPagerAdapter {
     private static CalendarList calendarList = null;
     private static Date touchedDate = null;
 
-    // TODO
-    // 現在のところ、前後500ヵ月分しか取れないようになっているので。
-    // 動的にlistに追加するようにしたほうが良いかも。
     public CalendarFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
         if( calendarList == null ) {

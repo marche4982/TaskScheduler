@@ -33,6 +33,7 @@ public class NewTaskCreate extends Activity {
 
     private ImageButton saveButton;
     private ImageButton returnButton;
+    private ImageButton deleteButton;
 
     private RadioButton radioButton_InputDate;
     private RadioButton radioButton_InputDayofWeek;
@@ -47,7 +48,9 @@ public class NewTaskCreate extends Activity {
     private Activity activity;
     private Date defDate;
 
-    private int nRegularDay;   // 定期タスク設定
+    private CheckBox checkDayOfWeek;
+
+    private ToDoTask task;
 
     @Override
     protected void onCreate(Bundle bundle){
@@ -82,12 +85,36 @@ public class NewTaskCreate extends Activity {
             }
         });
 
+        deleteButton = (ImageButton)findViewById(R.id.button_newtask_delete);
+        deleteButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if( event.getAction() == MotionEvent.ACTION_DOWN ){
+                    if( task != null ) {
+                        TaskScheduler.db.delete(task);
+                    }
+                    finish();
+                }
+                return false;
+            }
+        });
+
+        Bundle bundle2 = intent.getExtras();
+        TaskParcelable taskParcel = bundle2.getParcelable(getResources().getString(R.string.bundle_tag_task));
         taskNameEdit = (EditText)findViewById(R.id.edit_taskname);
         taskNameEdit.setFocusable(true);                // フォーカスを有効に
         taskNameEdit.setFocusableInTouchMode(true);     // タッチでのフォーカス有効
+        if( taskParcel != null ){
+            taskNameEdit.setText(taskParcel.taskName);
+        }
         SetClearTextOnTouch(taskNameEdit, getResources().getString(R.string.newtask_value_defaulttitle));
 
+
         memoEdit = (EditText)findViewById(R.id.edit_memo);
+        if( taskParcel != null ){
+            memoEdit.setText(taskParcel.taskMemo);
+        }
+
         SetClearTextOnTouch(memoEdit, getResources().getString(R.string.newtask_value_defaultmemo));
 
         startDate = (TextView)findViewById(R.id.textview_startDate);
@@ -99,6 +126,9 @@ public class NewTaskCreate extends Activity {
             }
         });
         startDate.setText(setDate(defDate));
+        if( taskParcel != null ){
+            startDate.setText(setDate(new Date(taskParcel.startDate)));
+        }
 
         endDate = (TextView)findViewById(R.id.textview_endDate);
         endDate.setOnClickListener(new View.OnClickListener(){
@@ -110,58 +140,51 @@ public class NewTaskCreate extends Activity {
         });
         endDate.setText(setDate(defDate));
         endDate = (TextView)findViewById(R.id.textview_endDate);
+        if( taskParcel != null ){
+            endDate.setText(setDate(new Date(taskParcel.endDate)));
+        }
 
-        daySelect = (TextView)findViewById(R.id.textview_daySelect);
-        daySelect.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                DaySelectDialog dialog = new DaySelectDialog();
-                dialog.show(getFragmentManager(), "曜日選択");
-            }
-        });
+        if( taskParcel != null ){
+            int nRegularday = taskParcel.nRegularDay;
 
-        radioButton_InputDate = (RadioButton)findViewById(R.id.radioButton_newtask_inputdate);
-        radioButton_InputDayofWeek = (RadioButton)findViewById(R.id.radioButton_newtask_inputdayofweek);
-        SetDefaultRadioBtnState();
-    }
-
-    private void SetDefaultRadioBtnState(){
-        SetRadioButtonState(radioButton_InputDate, true);
-        SetRadioButtonState(radioButton_InputDayofWeek, false);
-    }
-
-    private void SetRadioButtonState(RadioButton radioButton, boolean checked){
-        radioButton.setChecked(checked);
-        radioButton.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    // ボタンONOFFにあわせて、
-                    int nViewId = buttonView.getId();
-                    if (nViewId == R.id.radioButton_newtask_inputdate){
-                        View view = (View)findViewById(R.id.layout_newtask_inputMethod_date);
-                        if( isChecked == true ){    // 選択状態なら表示
-                            view.setVisibility(View.VISIBLE);
-                            startDate.setText(setDate(defDate));    // デフォ日時をセット
-                            endDate.setText(setDate(defDate));
-                        }
-                        else{   // 非選択状態なら非表示
-                            view.setVisibility(View.INVISIBLE);
-                            startDate.setText("");                  // 日時はクリア
-                            endDate.setText("");
-                        }
+            for(int i = 0; i < 7; i++){
+                if( (nRegularday & (0x00000001 << i)) != 0){
+                    switch(i){
+                        case 0: // 日曜日
+                            checkDayOfWeek = findViewById(R.id.checkbox_newtask_sunday);
+                            break;
+                        case 1: // 月曜日
+                            checkDayOfWeek = findViewById(R.id.checkbox_newtask_monday);
+                            break;
+                        case 2: // 火曜日
+                            checkDayOfWeek = findViewById(R.id.checkbox_newtask_tuesday);
+                            break;
+                        case 3: // 水曜日
+                            checkDayOfWeek = findViewById(R.id.checkbox_newtask_wednesday);
+                            break;
+                        case 4: // 木曜日
+                            checkDayOfWeek = findViewById(R.id.checkbox_newtask_thursday);
+                            break;
+                        case 5: // 金曜日
+                            checkDayOfWeek = findViewById(R.id.checkbox_newtask_friday);
+                            break;
+                        case 6: // 土曜日
+                            checkDayOfWeek = findViewById(R.id.checkbox_newtask_saturday);
+                            break;
                     }
-                    else if( nViewId == R.id.radioButton_newtask_inputdayofweek){
-                        View view = (View)findViewById(R.id.layout_newtask_inputMethod_dayofweek);
-                        if( isChecked == true ){    // 選択状態なら表示
-                            view.setVisibility(View.VISIBLE);
-                        }
-                        else{   // 非選択状態なら非表示
-                            view.setVisibility(View.INVISIBLE);
-                        }
-                    }
+                    checkDayOfWeek.setChecked(true);
                 }
-            });
-        return  ;
+            }
+        }
+
+
+        if( taskParcel != null ){
+            task = new ToDoTask();
+            task.setTaskName(taskParcel.taskName);
+            task.setTaskMemo(taskParcel.taskMemo);
+            task.setStartDate(new Date(taskParcel.startDate));
+            task.setEndDate(new Date(taskParcel.endDate));
+        }
     }
 
     public void SetClearTextOnTouch(final EditText editText, final String defaultString) {
@@ -222,41 +245,6 @@ public class NewTaskCreate extends Activity {
         return str;
     }
 
-    public void setDayofWeek(int dayofWeek){
-        nRegularDay = dayofWeek;
-        String StrDaySelect = "";
-        for(Integer i = 0; i < 7; i++){
-             int check = (dayofWeek >> i) & 0x01 ;
-             if( check == 1) {
-                 switch (i) {
-                     case 0:
-                         StrDaySelect += "日";
-                         break;
-                     case 1:
-                         StrDaySelect += "月";
-                         break;
-                     case 2:
-                         StrDaySelect += "火";
-                         break;
-                     case 3:
-                         StrDaySelect += "水";
-                         break;
-                     case 4:
-                         StrDaySelect += "木";
-                         break;
-                     case 5:
-                         StrDaySelect += "金";
-                         break;
-                     case 6:
-                         StrDaySelect += "土";
-                         break;
-                 }
-             }
-        }
-
-        daySelect.setText(StrDaySelect);
-    }
-
     public void setStartDate(String str){
         this.startDate.setText(str);
     }
@@ -298,6 +286,8 @@ public class NewTaskCreate extends Activity {
             newTask.setEndDate(null);
         }
 
+        int nRegularDay = GetnRegularDay();
+
         newTask.setnRegularDay(nRegularDay);
 
         if( newTask.checkAll() == false){
@@ -305,6 +295,54 @@ public class NewTaskCreate extends Activity {
         }
 
         TaskScheduler.db.save(newTask);
+    }
+
+    private int GetnRegularDay(){
+        int ret = 0;
+
+        int nWeekDay = getResources().getInteger(R.integer.weekdays);
+        for(int i = 0; i < nWeekDay; i++){
+            ret |= GetCheckBox(i);
+        }
+
+        return ret;
+    }
+
+    private int GetCheckBox(int nDayofweek){
+        int ret = 0;
+        CheckBox checkbox = null;
+
+        switch(nDayofweek){
+            case 0: // 日曜日
+                checkbox = findViewById(R.id.checkbox_newtask_sunday);
+                break;
+            case 1: // 月曜日
+                checkbox = findViewById(R.id.checkbox_newtask_monday);
+                break;
+            case 2: // 火曜日
+                checkbox = findViewById(R.id.checkbox_newtask_tuesday);
+                break;
+            case 3: // 水曜日
+                checkbox = findViewById(R.id.checkbox_newtask_wednesday);
+                break;
+            case 4: // 木曜日
+                checkbox = findViewById(R.id.checkbox_newtask_thursday);
+                break;
+            case 5: // 金曜日
+                checkbox = findViewById(R.id.checkbox_newtask_friday);
+                break;
+            case 6: // 土曜日
+                checkbox = findViewById(R.id.checkbox_newtask_saturday);
+                break;
+        }
+
+        if( checkbox != null ){
+            if( checkbox.isChecked() ){
+                ret = (0x00000001) << nDayofweek;
+            }
+        }
+
+        return ret;
     }
 
     private Date StringToTime(String strTime){

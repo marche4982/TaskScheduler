@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/mainmemo_taskname"
             android:layout_width="match_parent"
@@ -23,13 +24,15 @@
             android:layout_weight="1"
             android:textSize="12pt"
             android:text="TextView" />
-        <Button
-            android:id="@+id/mainmemo_delete"
+
+        <ImageButton
+            android:id="@+id/button_memo_edit"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="8pt"
-            android:visibility="invisible"
-            android:text="Delete" />
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@null"
+            app:srcCompat="@drawable/edit_icon" />
+
     </LinearLayout>
 
     <LinearLayout
