@@ -87,7 +87,18 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        Date showDate = CalendarFragmentPagerAdapter.GetTouchedDate();
+        if( showDate == null ){
+            // 取得できない場合は今日
+            showDate = new Date();
+        }
+        AddTaskList(showDate);
     }
 
 
@@ -99,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             manager.popBackStack();
         }
 
-        Date dTouchdDate = CalendarFragmentPagerAdapter.GetTouchedDate();
+        Date dTouchdDate = touchedDate;
         // DBから該当日付のレコードをとってきて、
         // その数分 add しないといけいない
         // レコードを bundle で渡して、Fragment側で受け取って
@@ -114,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
             // タスクを渡す
             TaskParcelable parcel = new TaskParcelable(task.getTaskName(),task.getTaskMemo(),
-                     task.getStartDate().getTime(),task.getEndDate().getTime(), task.getnRegularDay());
+                     task.getStartDate().getTime(),task.getEndDate().getTime(), task.getnRegularDay(), task.getId());
             bundle.putParcelable(getResources().getString(R.string.bundle_tag_task), parcel);
             fragment.setArguments(bundle);
             transaction.add(R.id.layout_main_taskList, fragment);

@@ -16,6 +16,7 @@ public class TaskParcelable implements Parcelable {
     public Long startDate;                // タスクの開始日付
     public Long endDate;                  // タスクの終了日付
     public int nRegularDay;         // 定期的な設定.各bitがOnなら設定あり、Offなら設定なし。1bit目が日曜日で7bit目が土曜
+    public int nId;
 
 
     public int describeContents() {
@@ -28,6 +29,7 @@ public class TaskParcelable implements Parcelable {
         out.writeLong(startDate);
         out.writeLong(endDate);
         out.writeInt(nRegularDay);
+        out.writeInt(nId);
     }
 
     public static final Parcelable.Creator<TaskParcelable> CREATOR
@@ -48,16 +50,18 @@ public class TaskParcelable implements Parcelable {
             startDate = in.readLong();
             endDate = in.readLong();
             nRegularDay = in.readInt();
+            nId = in.readInt();
         }
     }
 
 
-    public TaskParcelable(String taskName, String taskMemo, long startDate, long endDate, int nRegularDay) {
+    public TaskParcelable(String taskName, String taskMemo, long startDate, long endDate, int nRegularDay, int nId) {
         this.taskName = taskName;
         this.taskMemo  = taskMemo;
         this.startDate = startDate;
         this.endDate = endDate;
         this.nRegularDay = nRegularDay;
+        this.nId = nId;
     }
 
 

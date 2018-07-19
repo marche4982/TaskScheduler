@@ -15,4 +15,6 @@
     <integer name="textsize_taskname">12</integer>
     <integer name="maxlines_newtask_taskname">1</integer>
     <integer name="margin_memo_to_end">10</integer>
+    <integer name="request_code_main_to_newtask">1</integer>
+    <integer name="result_code_newtask_to_main">1</integer>
 </resources>

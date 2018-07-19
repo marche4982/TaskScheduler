@@ -184,6 +184,8 @@ public class NewTaskCreate extends Activity {
             task.setTaskMemo(taskParcel.taskMemo);
             task.setStartDate(new Date(taskParcel.startDate));
             task.setEndDate(new Date(taskParcel.endDate));
+            task.setnRegularDay(taskParcel.nRegularDay);
+            task.setId(taskParcel.nId);
         }
     }
 
@@ -378,7 +380,6 @@ public class NewTaskCreate extends Activity {
 
         return date;
     }
-
 
 
 }
