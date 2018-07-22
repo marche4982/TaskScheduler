@@ -57,6 +57,7 @@ public class NewTaskCreate extends Activity {
         super.onCreate(bundle);
         setContentView(R.layout.newtask_create);
         activity = this;
+        task = new ToDoTask();
 
         Intent intent = getIntent();
         defDate = new Date();
@@ -104,15 +105,19 @@ public class NewTaskCreate extends Activity {
         taskNameEdit = (EditText)findViewById(R.id.edit_taskname);
         taskNameEdit.setFocusable(true);                // フォーカスを有効に
         taskNameEdit.setFocusableInTouchMode(true);     // タッチでのフォーカス有効
-        if( taskParcel != null ){
+        if( taskParcel != null && taskParcel.taskName.length() > 0 ){
             taskNameEdit.setText(taskParcel.taskName);
+            taskNameEdit.setTextColor(getResources().getColor(R.color.color_editText_Input));
+            taskNameEdit.setSelection(taskNameEdit.getText().length());
         }
         SetClearTextOnTouch(taskNameEdit, getResources().getString(R.string.newtask_value_defaulttitle));
 
 
         memoEdit = (EditText)findViewById(R.id.edit_memo);
-        if( taskParcel != null ){
+        if( taskParcel != null && taskParcel.taskMemo.length() > 0 ){
             memoEdit.setText(taskParcel.taskMemo);
+            memoEdit.setTextColor(getResources().getColor(R.color.color_editText_Input));
+            memoEdit.setSelection(memoEdit.getText().length());
         }
 
         SetClearTextOnTouch(memoEdit, getResources().getString(R.string.newtask_value_defaultmemo));
@@ -179,7 +184,6 @@ public class NewTaskCreate extends Activity {
 
 
         if( taskParcel != null ){
-            task = new ToDoTask();
             task.setTaskName(taskParcel.taskName);
             task.setTaskMemo(taskParcel.taskMemo);
             task.setStartDate(new Date(taskParcel.startDate));
@@ -258,11 +262,12 @@ public class NewTaskCreate extends Activity {
     public void setRemindTime(String str){ this.remindTime.setText(str);}
 
     public void saveTask(){
-        ToDoTask newTask = new ToDoTask();
-        newTask.setId(TaskScheduler.db.getNewId()); // ID
+        if( task.getId() == 0 ) {
+            task.setId(TaskScheduler.db.getNewId()); // ID
+        }
 
         // タイトルは空だとしても必ず入れる
-        newTask.setTaskName(taskNameEdit.getText().toString());    // EditText 自体にデフォルトテキストを持たせたいなあ
+        task.setTaskName(taskNameEdit.getText().toString());    // EditText 自体にデフォルトテキストを持たせたいなあ
 
         String memo = new String();
         if( memoEdit.getCurrentTextColor() == getResources().getColor(R.color.color_editText_Input )) {
@@ -272,31 +277,31 @@ public class NewTaskCreate extends Activity {
         else{
             memo = "";
         }
-        newTask.setTaskMemo(memo);
+        task.setTaskMemo(memo);
 
         if( startDate.length() > 0 ) {
-            newTask.setStartDate(StringToDate(startDate.getText().toString()));
+            task.setStartDate(StringToDate(startDate.getText().toString()));
         }
         else{
-            newTask.setStartDate(null);
+            task.setStartDate(null);
         }
 
         if( startDate.length() > 0 ) {
-            newTask.setEndDate(StringToDate(endDate.getText().toString()));
+            task.setEndDate(StringToDate(endDate.getText().toString()));
         }
         else{
-            newTask.setEndDate(null);
+            task.setEndDate(null);
         }
 
         int nRegularDay = GetnRegularDay();
 
-        newTask.setnRegularDay(nRegularDay);
+        task.setnRegularDay(nRegularDay);
 
-        if( newTask.checkAll() == false){
+        if( task.checkAll() == false){
             return;
         }
 
-        TaskScheduler.db.save(newTask);
+        TaskScheduler.db.save(task);
     }
 
     private int GetnRegularDay(){

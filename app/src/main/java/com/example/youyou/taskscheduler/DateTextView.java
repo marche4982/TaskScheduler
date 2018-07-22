@@ -43,7 +43,7 @@ public class DateTextView extends android.support.v7.widget.AppCompatTextView{
         this.setWidth(mViewWidth);           // 7等分
         this.setBackgroundDrawable(getResources().getDrawable(R.drawable.frame_datetextview));
         this.setGravity(Gravity.TOP | Gravity.LEFT);
-        this.setHeight(135);
+        this.setHeight(130);
 
         this.setOnTouchListener(new OnTouchListener() {
             @Override

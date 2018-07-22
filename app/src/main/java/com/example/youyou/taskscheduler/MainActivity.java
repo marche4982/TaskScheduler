@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -33,22 +35,19 @@ public class MainActivity extends AppCompatActivity {
     private Activity activity;
     private FragmentManager manager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         activity = this;
-
         // 自動テストする
 
-        // メモを削除編集する機能
-            // →　編集削除ボタン付ける　→　idがないんで消せません
-            // →　編集時の文字色とフォーカスカエル
-
-        // 初期標示時に今日のタスクを追加
-        // メモの色を変えられるようにする
-        // カレンダーの真下にメモを来るようにしたい
+        // メモと予定の内容がそれぞれわかるようにする
+        // バックキーを押すとメモフラグメントが消える
+            // バックキー押したのをフックして、戻らないようにする
+        // 最初起動したとき、メモが表示されない
+              // Viewがまだ作られていないからかな
+        // 自動テストする
 
         manager = getSupportFragmentManager();
         viewPager = (ViewPager)findViewById(R.id.calendar_pager);
@@ -61,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 ((MainActivity)activity).ClearTaskList();
+                SetMemoDate((null));
+
             }
 
             @Override
@@ -101,8 +102,22 @@ public class MainActivity extends AppCompatActivity {
         AddTaskList(showDate);
     }
 
+    public void SetMemoDate(Date date){
+        TextView textViewMemoDate = (TextView) findViewById(R.id.textview_main_memodate);
+        if( date != null ) {
+            String str = String.format(getResources().getString(R.string.format_memo_date),
+                    date.getMonth() + 1, date.getDate());
+            textViewMemoDate.setText(str);
+        }
+        else{
+            textViewMemoDate.setText("");
+        }
+    }
+
 
     public void AddTaskList(Date touchedDate){
+
+        SetMemoDate(touchedDate);
 
         FragmentTransaction transaction = manager.beginTransaction();
         if( manager.getBackStackEntryCount() != 0 ){

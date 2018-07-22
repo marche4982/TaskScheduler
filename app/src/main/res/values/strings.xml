@@ -9,4 +9,6 @@
     <string name="newtask_name_radio_inputdayofweek">曜日で選択</string>
     <string name="bundle_tag_task">task</string>
     <string name="fragment_backstack">fragment_backstack</string>
+    <string name="title_newtask_date">日程設定</string>
+    <string name="format_memo_date">%d月%d日の予定</string>
 </resources>

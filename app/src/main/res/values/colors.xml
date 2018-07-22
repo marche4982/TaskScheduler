@@ -8,4 +8,9 @@
     <color name="color_main_background">#F2F2F2</color>
     <color name="color_memo_yellow">#FFED7B</color>
     <color name="color_red">#FFFF0000</color>
+    <color name="color_black">#000000</color>
+    <color name="color_green">#34BB59</color>
+    <color name="color_orange">#F37D0A</color>
+    <color name="color_white">#FFFFFF</color>
 </resources>
+

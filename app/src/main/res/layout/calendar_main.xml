@@ -7,14 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/color_main_background"
     tools:context="com.example.youyou.taskscheduler.MainActivity">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30pt"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:background="@color/color_green">
 
         <ImageButton
             android:id="@+id/left_button"
@@ -22,18 +21,22 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:background="@null"
+            android:tint="@color/color_white"
             android:scaleType="fitStart"
             app:srcCompat="?attr/actionModeCloseDrawable" />
 
         <TextView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/calendar_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:gravity="center_vertical|center_horizontal"
             android:textAlignment="gravity"
-            android:text="2018"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textColor="@color/color_white"
+            android:background="@color/color_green"
             android:textSize="15pt" />
 
         <ImageButton
@@ -45,17 +48,17 @@
             android:layout_alignParentRight="true"
             android:background="@null"
             android:scaleType="fitStart"
+            android:tint="@color/color_white"
             app:srcCompat="?attr/actionModeCloseDrawable" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <LinearLayout
         android:id="@+id/calendar_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:orientation="vertical">
     </LinearLayout>
 
 </LinearLayout>
