@@ -44,6 +44,7 @@
             android:text="@string/newtask_value_defaulttitle"
             android:lines="@integer/maxlines_newtask_taskname"
             android:maxLines="@integer/maxlines_newtask_taskname"
+            android:inputType="text"
             android:textColor="@color/color_editText_unInput" />
     </LinearLayout>
 

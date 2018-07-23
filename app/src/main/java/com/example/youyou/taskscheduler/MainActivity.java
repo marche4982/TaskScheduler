@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +26,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import io.realm.RealmList;
+import io.realm.RealmResults;
 
 import static com.example.youyou.taskscheduler.TaskScheduler.db;
 
@@ -42,11 +44,12 @@ public class MainActivity extends AppCompatActivity {
         activity = this;
         // 自動テストする
 
+
         // メモと予定の内容がそれぞれわかるようにする
-        // バックキーを押すとメモフラグメントが消える
+
+        // バックキーを押すとメモフラグメントが消えるlll
             // バックキー押したのをフックして、戻らないようにする
-        // 最初起動したとき、メモが表示されない
-              // Viewがまだ作られていないからかな
+
         // 自動テストする
 
         manager = getSupportFragmentManager();
@@ -59,9 +62,11 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                ((MainActivity)activity).ClearTaskList();
-                SetMemoDate((null));
-
+                if( positionOffset != 0 ) {
+                    // 初期標示時は実行しない
+                    ((MainActivity) activity).ClearTaskList();
+                    SetMemoDate((null));
+                }
             }
 
             @Override
