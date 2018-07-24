@@ -44,11 +44,7 @@ public class MainActivity extends AppCompatActivity {
         activity = this;
         // 自動テストする
 
-
         // メモと予定の内容がそれぞれわかるようにする
-
-        // 同じ予定が二つ出力される
-            // 曜日のセレクトと日程のセレクトで結果が重複してる
 
         // バックキーを押すとメモフラグメントが消えるlll
             // バックキー押したのをフックして、戻らないようにする
@@ -146,9 +142,20 @@ public class MainActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putLong("date", dTouchdDate.getTime());
 
+            Long lStartDate = (long)0;
+            if( task.getStartDate() != null ){
+                lStartDate = task.getStartDate().getTime();
+            }
+
+            Long lendDate = (long)0;
+            if( task.getEndDate() != null ){
+                lendDate = task.getEndDate().getTime();
+            }
+
+
             // タスクを渡す
             TaskParcelable parcel = new TaskParcelable(task.getTaskName(),task.getTaskMemo(),
-                     task.getStartDate().getTime(),task.getEndDate().getTime(), task.getnRegularDay(), task.getId());
+                    lStartDate,lendDate, task.getnRegularDay(), task.getId());
             bundle.putParcelable(getResources().getString(R.string.bundle_tag_task), parcel);
             fragment.setArguments(bundle);
             transaction.add(R.id.layout_main_taskList, fragment);

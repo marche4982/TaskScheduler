@@ -182,6 +182,10 @@ public class NewTaskCreate extends Activity {
             }
         }
 
+        radioButton_InputDate = (RadioButton)findViewById(R.id.radioButton_newtask_inputdate);
+        radioButton_InputDayofWeek = (RadioButton)findViewById(R.id.radioButton_newtask_inputdayofweek);
+        SetDefaultRadioBtnState();
+
 
         if( taskParcel != null ){
             task.setTaskName(taskParcel.taskName);
@@ -191,6 +195,43 @@ public class NewTaskCreate extends Activity {
             task.setnRegularDay(taskParcel.nRegularDay);
             task.setId(taskParcel.nId);
         }
+    }
+
+
+    private void SetDefaultRadioBtnState(){
+        SetRadioButtonState(radioButton_InputDate, true);
+        SetRadioButtonState(radioButton_InputDayofWeek, false);
+    }
+
+    private void SetRadioButtonState(RadioButton radioButton, boolean checked) {
+        radioButton.setChecked(checked);
+        radioButton.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // ボタンONOFFにあわせて、
+                int nViewId = buttonView.getId();
+                if (nViewId == R.id.radioButton_newtask_inputdate) {
+                    View view = (View) findViewById(R.id.layout_newtask_inputMethod_date);
+                    if (isChecked == true) {    // 選択状態なら表示
+                        view.setVisibility(View.VISIBLE);
+                        startDate.setText(setDate(defDate));    // デフォ日時をセット
+                        endDate.setText(setDate(defDate));
+                    } else {   // 非選択状態なら非表示
+                        view.setVisibility(View.GONE);
+                        startDate.setText("");                  // 日時はクリア
+                        endDate.setText("");
+                    }
+                } else if (nViewId == R.id.radioButton_newtask_inputdayofweek) {
+                    View view = (View) findViewById(R.id.layout_newtask_inputMethod_dayofweek);
+                    if (isChecked == true) {    // 選択状態なら表示
+                        view.setVisibility(View.VISIBLE);
+                    } else {   // 非選択状態なら非表示
+                        view.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
+        return;
     }
 
     public void SetClearTextOnTouch(final EditText editText, final String defaultString) {

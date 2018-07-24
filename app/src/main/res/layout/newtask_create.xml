@@ -64,42 +64,147 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:lines="5"
-            android:maxLines="5"
+            android:lines="4"
+            android:maxLines="4"
             android:text="@string/newtask_value_defaultmemo"
             android:inputType="textMultiLine"
             android:textColor="@color/color_editText_unInput">
         </EditText>
     </LinearLayout>
 
+
     <LinearLayout
-        android:id="@+id/layout_newtask_inputMethod_date"
+        android:id="@+id/layout_newtask_inputDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout_memo"
         android:layout_marginTop="10dp"
         android:orientation="vertical">
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textview_newtask_date"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_newtask_date"
+                android:textStyle="bold"
+                android:textColor="@color/color_green"
+                android:textSize="15dp">
+            </TextView>
+        </LinearLayout>
+
+
+        <RadioGroup
+            android:id="@+id/layout_newtask_selectInputMethod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButton_newtask_inputdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/newtask_name_radio_inputdate" />
+
+            <RadioButton
+                android:id="@+id/radioButton_newtask_inputdayofweek"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="@string/newtask_name_radio_inputdayofweek" />
+        </RadioGroup>
+
+
+        <LinearLayout
+            android:id="@+id/layout_newtask_inputMethod_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_newtask_selectInputMethod"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/layout_newtask_startdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@color/color_green"
+                        android:layout_margin="10dp">
+
+                        <TextView
+                            android:id="@+id/textview_newtask_startdate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:textSize="15dp"
+                            android:layout_margin="10dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/color_white"
+                            android:text="開始日" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@color/color_white"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp">
+
+                        <TextView
+                            android:id="@+id/textview_startDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="20dp"
+                            android:textColor="@color/color_black"
+
+                            android:visibility="visible">
+                        </TextView>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/layout_dateKara"
+                android:layout_below="@+id/layout_newtask_startdate"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/textview_newtask_date"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/textview_dateKara"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/title_newtask_date"
+                    android:gravity="center"
+                    android:textSize="20dp"
                     android:textStyle="bold"
                     android:textColor="@color/color_green"
-                    android:textSize="20dp">
-                </TextView>
+                    android:rotation="90"
+                    android:text="@string/newtask_value_dateKara"/>
             </LinearLayout>
 
-
             <LinearLayout
-                android:id="@+id/layout_newtask_startdate"
+                android:id="@+id/layout_endDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_dateKara"
                 android:layout_gravity="top"
                 android:orientation="horizontal">
 
@@ -109,9 +214,8 @@
                     android:orientation="horizontal"
                     android:background="@color/color_green"
                     android:layout_margin="10dp">
-
                     <TextView
-                        android:id="@+id/textview_newtask_startdate"
+                        android:id="@+id/textView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -119,7 +223,8 @@
                         android:layout_margin="10dp"
                         android:textStyle="bold"
                         android:textColor="@color/color_white"
-                        android:text="開始日" />
+                        android:text="終了日">
+                    </TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -129,176 +234,106 @@
                     android:background="@color/color_white"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp">
-
-                    <TextView
-                        android:id="@+id/textview_startDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:textSize="20dp"
-                        android:textColor="@color/color_black"
-
-                        android:visibility="visible">
-                    </TextView>
+                        <TextView
+                            android:id="@+id/textview_endDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="20dp"
+                            android:textColor="@color/color_black"
+                            android:background="@color/color_white"
+                            android:visibility="visible">
+                        </TextView>
                 </LinearLayout>
 
             </LinearLayout>
-
-
+        </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layout_dateKara"
-            android:layout_below="@+id/layout_newtask_startdate"
+            android:id="@+id/layout_newtask_inputMethod_dayofweek"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_newtask_inputMethod_date"
+            android:layout_gravity="top"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textview_dateKara"
-                android:layout_width="match_parent"
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="20dp"
                 android:textStyle="bold"
                 android:textColor="@color/color_green"
-                android:rotation="90"
-                android:text="@string/newtask_value_dateKara"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_endDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_dateKara"
-            android:layout_gravity="top"
-            android:orientation="horizontal">
+                android:text="定期的な予定（曜日を選択）">
+            </TextView>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/color_green"
-                android:layout_margin="10dp">
-                <TextView
-                    android:id="@+id/textView6"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkbox_newtask_sunday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="15dp"
-                    android:layout_margin="10dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/color_white"
-                    android:text="終了日">
-                </TextView>
+                    android:text="日曜日"/>
+
+
+                <CheckBox
+                    android:id="@+id/checkbox_newtask_monday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="月曜日"/>
+
+                <CheckBox
+                    android:id="@+id/checkbox_newtask_tuesday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="火曜日"/>
+
+                <CheckBox
+                    android:id="@+id/checkbox_newtask_wednesday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="水曜日"/>
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/color_white"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp">
-                    <TextView
-                        android:id="@+id/textview_endDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:textSize="20dp"
-                        android:textColor="@color/color_black"
-                        android:background="@color/color_white"
-                        android:visibility="visible">
-                    </TextView>
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkbox_newtask_thursday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="木曜日"/>
+
+                <CheckBox
+                    android:id="@+id/checkbox_newtask_friday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="金曜日"/>
+
+                <CheckBox
+                    android:id="@+id/checkbox_newtask_saturday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="土曜日"/>
+
             </LinearLayout>
 
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_newtask_inputMethod_dayofweek"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_newtask_inputMethod_date"
-        android:layout_gravity="top"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/color_green"
-            android:text="定期的な予定（曜日を選択）">
-        </TextView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@color/colorPrimary"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/checkbox_newtask_sunday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="日曜日"/>
-
-
-            <CheckBox
-                android:id="@+id/checkbox_newtask_monday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="月曜日"/>
-
-            <CheckBox
-                android:id="@+id/checkbox_newtask_tuesday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="火曜日"/>
-
-            <CheckBox
-                android:id="@+id/checkbox_newtask_wednesday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="水曜日"/>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@color/colorPrimary"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/checkbox_newtask_thursday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="木曜日"/>
-
-            <CheckBox
-                android:id="@+id/checkbox_newtask_friday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="金曜日"/>
-
-            <CheckBox
-                android:id="@+id/checkbox_newtask_saturday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="土曜日"/>
-
-        </LinearLayout>
-
-
     </LinearLayout>
 
     <LinearLayout

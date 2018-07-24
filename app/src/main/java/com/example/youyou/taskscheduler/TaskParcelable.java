@@ -24,6 +24,19 @@ public class TaskParcelable implements Parcelable {
     }
 
     public void writeToParcel(Parcel out, int flags) {
+        if( taskName == null ){
+            taskName = "";
+        }
+        if( taskMemo == null ){
+            taskMemo = "";
+        }
+        if( startDate == null ){
+            startDate = (long)0;
+        }
+        if( endDate == null ){
+            endDate = (long)0;
+        }
+
         out.writeString(taskName);
         out.writeString(taskMemo);
         out.writeLong(startDate);

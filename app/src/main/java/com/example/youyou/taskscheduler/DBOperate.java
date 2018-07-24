@@ -90,6 +90,11 @@ public class DBOperate {
 
         Date dateFrom = (Date)date.clone(); // 検索開始期間
         Date dateEnd = (Date)date.clone();  // 検索終了期間 23:59:59
+
+        dateFrom.setHours(0);
+        dateFrom.setMinutes(0);
+        dateFrom.setSeconds((0));
+
         dateEnd.setHours(23);
         dateEnd.setMinutes((59));
         dateEnd.setSeconds(59);
