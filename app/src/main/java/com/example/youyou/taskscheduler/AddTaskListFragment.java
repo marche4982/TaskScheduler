@@ -65,15 +65,5 @@ public class AddTaskListFragment extends android.support.v4.app.Fragment {
         return view;
     }
 
-    // メモの修正できるようにする
-        // メモをクリックしたら、更新できるようにする
-
-    // 全体的にデザインをよくする
-
-    // 更新画面でメモ色を変えられるようにする
-
-    // 定期的なタスクを入力できるようにする
-
-
 
 }
